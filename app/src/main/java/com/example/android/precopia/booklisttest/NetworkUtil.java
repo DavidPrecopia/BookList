@@ -1,0 +1,164 @@
+package com.example.android.precopia.booklisttest;
+
+import android.support.annotation.NonNull;
+import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.net.ssl.HttpsURLConnection;
+
+class NetworkUtil {
+	
+	private static final String LOG_TAG = NetworkUtil.class.getSimpleName();
+	
+	private NetworkUtil() {
+	}
+	
+	
+	static List<Book> fetchBookInformation(String requestUrl) {
+		URL url = createUrl(requestUrl);
+		
+		String jsonResponse = "";
+		try {
+			jsonResponse = httpRequest(url);
+		} catch (IOException e) {
+			// Should catch the exception from disconnect() if I'm not mistaken
+			Log.e(LOG_TAG, "Error closing InputStream", e);
+		}
+		return parseJsonResponse(jsonResponse);
+	}
+	
+	private static URL createUrl(String requestUrl) {
+		URL url = null;
+		try {
+			url = new URL(requestUrl);
+		} catch (MalformedURLException e) {
+			Log.e(LOG_TAG, "Error instantiating URL object", e);
+		}
+		return url;
+	}
+	
+	private static String httpRequest(URL url) throws IOException {
+		String jsonResponse = "";
+		
+		if (url == null) {
+			return jsonResponse;
+		}
+		
+		HttpsURLConnection httpsURLConnection = null;
+		InputStream inputStream = null;
+		
+		try {
+			httpsURLConnection = (HttpsURLConnection) url.openConnection();
+			httpsURLConnection.setRequestMethod("GET");
+			httpsURLConnection.setConnectTimeout(15000);
+			httpsURLConnection.setReadTimeout(10000);
+			httpsURLConnection.connect();
+			if (httpsURLConnection.getResponseCode() == 200) {
+				inputStream = httpsURLConnection.getInputStream();
+				jsonResponse = readFromStream(inputStream);
+			} else {
+				Log.e(LOG_TAG, "Connection error - HTTP response code: " + httpsURLConnection.getResponseCode());
+			}
+		} catch (IOException e) {
+			Log.e(LOG_TAG, "Error establishing HTTPS connection (httpRequest)", e);
+		} finally {
+			disconnect(httpsURLConnection, inputStream);
+		}
+		return jsonResponse;
+	}
+	
+	
+	private static String readFromStream(InputStream inputStream) throws IOException {
+		StringBuilder stringBuilder = new StringBuilder();
+		if (inputStream != null) {
+			readInputStream(stringBuilder, getBufferedReader(inputStream));
+		}
+		return stringBuilder.toString();
+	}
+	
+	@NonNull
+	private static BufferedReader getBufferedReader(InputStream inputStream) {
+		InputStreamReader inputStreamReader = new InputStreamReader(inputStream, Charset.forName("UTF-8"));
+		return new BufferedReader(inputStreamReader);
+	}
+	
+	private static void readInputStream(StringBuilder stringBuilder, BufferedReader bufferedReader) throws IOException {
+		String line = bufferedReader.readLine();
+		while (line != null) {
+			stringBuilder.append(line);
+			line = bufferedReader.readLine();
+		}
+	}
+	
+	
+	private static void disconnect(HttpsURLConnection httpsURLConnection, InputStream inputStream) throws IOException {
+		if (httpsURLConnection != null) {
+			httpsURLConnection.disconnect();
+		}
+		if (inputStream != null) {
+			inputStream.close();
+		}
+	}
+	
+	private static List<Book> parseJsonResponse(String jsonResponse) {
+		List<Book> bookList = new ArrayList<>();
+		try {
+			JSONArray jsonArrayOfBooks = new JSONObject(jsonResponse).optJSONArray("items");
+			if (jsonArrayOfBooks == null) {
+				return bookList;
+			}
+			for (int x = 0; x < jsonArrayOfBooks.length(); x++) {
+				JSONObject bookInfo = jsonArrayOfBooks.getJSONObject(x).getJSONObject("volumeInfo");
+				bookList.add(extractBookInfo(bookInfo));
+			}
+		} catch (JSONException e) {
+			Log.e(LOG_TAG, "parseJsonResponse method", e);
+		}
+		return bookList;
+	}
+	
+	private static Book extractBookInfo(JSONObject bookInfo) {
+		String title = "", authors = "", thumbnailUrl = "", bookInfoUrl = "";
+		try {
+			title = bookInfo.getString("title");
+			authors = getAuthors(bookInfo.getJSONArray("authors"));
+			thumbnailUrl =
+					bookInfo.isNull("imageLinks") ? "" : bookInfo.optJSONObject("imageLinks").getString("thumbnail");
+			bookInfoUrl =
+					bookInfo.isNull("infoLink") ? "" : bookInfo.optString("infoLink");
+		} catch (JSONException e) {
+			Log.e(LOG_TAG, "extractBookInfo method", e);
+		}
+		
+		return new Book(title, authors, thumbnailUrl, bookInfoUrl);
+	}
+	
+	private static String getAuthors(JSONArray jsonAuthorsArray) throws JSONException {
+		StringBuilder stringBuilder = new StringBuilder();
+		try {
+			for (int j = 0; j < jsonAuthorsArray.length(); j++) {
+				// Separate authors if multiple
+				if (j > 0) {
+					stringBuilder.append("; ");
+				}
+				stringBuilder.append(jsonAuthorsArray.get(0).toString());
+			}
+		} catch (JSONException e) {
+			Log.e(LOG_TAG, "getAuthors", e);
+		}
+		return stringBuilder.toString();
+	}
+}
