@@ -11,5 +11,8 @@
 	<string name="error_no_connection">No internet connection</string>
 	<string name="error_no_books_found">No books found</string>
 	<string name="book_list_activity_label">List of Books</string>
-	<string name="settings_activity_label">Settings</string>
+	<string name="settings_name">Settings</string>
+	<string name="settings_default_value">20</string>
+	<string name="settings_max_result_title">Maximum Results</string>
+	<string name="settings_max_results_key">maximum_results</string>
 </resources>

@@ -10,27 +10,35 @@ final class QueryUrlConcatenation {
 	private static final StringBuilder BASE_URL = new StringBuilder(
 			"https://www.googleapis.com/books/v1/volumes?q="
 	);
+	
 	private static final String IN_TITLE = "+intitle:";
 	private static final String IN_AUTHOR = "+inauthor:";
-	private static final String MAX_RESULTS = "&maxResults=20";
+	private static final String MAX_RESULTS = "&maxResults=";
 	
 	private QueryUrlConcatenation() {
 	}
 	
-	static String concatUrl(String general, String title, String author) {
+	static String concatUrl(String general, String title, String author, String maxResults) {
 		StringBuilder url = new StringBuilder(BASE_URL);
-		if (! TextUtils.isEmpty(general)) {
-			url.append(general);
-		}
-		if (! TextUtils.isEmpty(title)) {
-			url.append(IN_TITLE).append(title);
-		}
-		if (! TextUtils.isEmpty(author)) {
-			url.append(IN_AUTHOR).append(author);
-		}
-		url.append(MAX_RESULTS);
+		
+		url.append(appendGeneral(general));
+		url.append(appendTitle(title));
+		url.append(appendAuthor(author));
+		url.append(MAX_RESULTS).append(maxResults);
 		
 		Log.v(LOG_TAG, url.toString());
 		return url.toString();
+	}
+	
+	private static String appendGeneral(String general) {
+		return TextUtils.isEmpty(general) ? "" : general;
+	}
+	
+	private static String appendTitle(String title) {
+		return TextUtils.isEmpty(title) ? "" : (IN_TITLE + title);
+	}
+	
+	private static String appendAuthor(String author) {
+		return TextUtils.isEmpty(author) ? "" : (IN_AUTHOR + author);
 	}
 }

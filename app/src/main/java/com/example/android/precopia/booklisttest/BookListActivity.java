@@ -4,10 +4,12 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -42,6 +44,10 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 		listView.setAdapter(bookAdapter);
 		listViewListener(listView);
 		
+		queryServer();
+	}
+	
+	private void queryServer() {
 		if (haveConnection()) {
 			getLoaderManager().initLoader(0, null, this);
 		} else {
@@ -93,7 +99,15 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 		String general = intent.getStringExtra(getString(R.string.general_edit_text));
 		String title = intent.getStringExtra(getString(R.string.title_edit_text));
 		String author = intent.getStringExtra(getString(R.string.author_edit_text));
-		return QueryUrlConcatenation.concatUrl(general, title, author);
+		return QueryUrlConcatenation.concatUrl(general, title, author, getMaxResults());
+	}
+	
+	private String getMaxResults() {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+		return sharedPreferences.getString(
+				getString(R.string.settings_max_results_key),
+				getString(R.string.settings_default_value)
+		);
 	}
 	
 	@Override
