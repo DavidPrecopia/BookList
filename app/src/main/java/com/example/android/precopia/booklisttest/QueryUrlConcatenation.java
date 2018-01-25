@@ -24,7 +24,7 @@ final class QueryUrlConcatenation {
 		url.append(appendGeneral(general));
 		url.append(appendTitle(title));
 		url.append(appendAuthor(author));
-		url.append(MAX_RESULTS).append(maxResults);
+		url.append(appendMaxResults(maxResults));
 		
 		Log.v(LOG_TAG, url.toString());
 		return url.toString();
@@ -40,5 +40,9 @@ final class QueryUrlConcatenation {
 	
 	private static String appendAuthor(String author) {
 		return TextUtils.isEmpty(author) ? "" : (IN_AUTHOR + author);
+	}
+	
+	private static String appendMaxResults(String maxResults) {
+		return Integer.valueOf(maxResults) > 40 ? "40" : maxResults;
 	}
 }

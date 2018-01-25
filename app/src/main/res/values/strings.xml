@@ -13,6 +13,6 @@
 	<string name="book_list_activity_label">List of Books</string>
 	<string name="settings_name">Settings</string>
 	<string name="settings_default_value">20</string>
-	<string name="settings_max_result_title">Maximum Results</string>
+	<string name="settings_max_result_title">Maximum Results (limit 40)</string>
 	<string name="settings_max_results_key">maximum_results</string>
 </resources>
