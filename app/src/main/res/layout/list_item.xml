@@ -38,7 +38,8 @@
 			android:textAppearance="?android:textAppearanceSmall"
 			android:visibility="visible"
 			tools:text="author"
-			android:layout_weight="1"/>
+			android:layout_weight="1"
+			android:gravity="start|bottom"/>
 	</LinearLayout>
 
 </LinearLayout>

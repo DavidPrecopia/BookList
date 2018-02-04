@@ -63,6 +63,7 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 		if (haveConnection()) {
 			getLoaderManager().initLoader(0, null, this);
 		} else {
+			// TODO how am I handling ProgressBar, Error TextView, and list_item???
 			progressBar.setVisibility(View.GONE);
 			errorTextView.setText(R.string.error_no_connection);
 		}
