@@ -12,10 +12,10 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,11 +23,12 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Book>> {
+public class BookListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Book>>, BookRecyclerAdapter.ItemClickListener  {
 	
 	private static final String LOG_TAG = BookListActivity.class.getSimpleName();
 	
-	private BookAdapter bookAdapter;
+	private BookRecyclerAdapter bookRecyclerAdapter;
+	
 	private ProgressBar progressBar;
 	private TextView errorTextView;
 	
@@ -39,13 +40,17 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 		progressBar = findViewById(R.id.progress_bar);
 		errorTextView = findViewById(R.id.tv_error);
 		
-		ListView listView = findViewById(R.id.recycler_view_layout);
-		bookAdapter = new BookAdapter(this, new ArrayList<Book>());
-		listView.setAdapter(bookAdapter);
-		listViewListener(listView);
+		// TODO Move below into own method
+		RecyclerView recyclerView = findViewById(R.id.recycler_view_layout);
+		bookRecyclerAdapter = new BookRecyclerAdapter(new ArrayList<Book>(), this);
+		recyclerView.setAdapter(bookRecyclerAdapter);
+		recyclerView.setHasFixedSize(true);
+		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+		recyclerView.setLayoutManager(linearLayoutManager);
 		
 		queryServer();
 	}
+	
 	
 	private void queryServer() {
 		if (haveConnection()) {
@@ -55,29 +60,6 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 			errorTextView.setText(R.string.error_no_connection);
 		}
 	}
-	
-	// TODO Fix OnItemClickListener
-	private void listViewListener(ListView listView) {
-		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				openWebBrowser(position);
-			}
-		});
-	}
-	
-	private void openWebBrowser(int position) {
-		String infoUrl = bookAdapter.getItem(position).getBookInfoUrl();
-		if (TextUtils.isEmpty(infoUrl)) {
-			Toast.makeText(BookListActivity.this, R.string.no_book_info_url_error, Toast.LENGTH_SHORT).show();
-		} else {
-			Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(infoUrl));
-			if (intent.resolveActivity(getPackageManager()) != null) {
-				startActivity(intent);
-			}
-		}
-	}
-	
 	
 	private boolean haveConnection() {
 		ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -91,7 +73,7 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 	
 	@Override
 	public Loader<List<Book>> onCreateLoader(int id, Bundle args) {
-		return new BookAsyncLoader(BookListActivity.this, getUrl());
+		return new BookAsyncLoader(this, getUrl());
 	}
 	
 	private String getUrl() {
@@ -112,18 +94,33 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 	
 	@Override
 	public void onLoadFinished(Loader<List<Book>> loader, List<Book> bookList) {
-		// TODO onLoadFinished
 		progressBar.setVisibility(View.GONE);
 		if (bookList == null || bookList.isEmpty()) {
 			errorTextView.setText(R.string.error_no_books_found);
 		} else {
-			bookAdapter.swapData(bookList);
+			bookRecyclerAdapter.swapData(bookList);
 		}
 	}
 	
 	@Override
 	public void onLoaderReset(Loader<List<Book>> loader) {
-		// TODO onLoaderReset adapter.swapData()
-		bookAdapter.clear();
+		bookRecyclerAdapter.swapData(new ArrayList<Book>());
+	}
+	
+	
+	@Override
+	public void onClick(String bookInfoUrl) {
+		if (TextUtils.isEmpty(bookInfoUrl)) {
+			Toast.makeText(BookListActivity.this, R.string.no_book_info_url_error, Toast.LENGTH_SHORT).show();
+		} else {
+			intentWebBrowser(bookInfoUrl);
+		}
+	}
+	
+	private void intentWebBrowser(String bookInfoUrl) {
+		Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(bookInfoUrl));
+		if (intent.resolveActivity(getPackageManager()) != null) {
+			startActivity(intent);
+		}
 	}
 }
