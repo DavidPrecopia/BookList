@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -23,7 +24,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Book>>, BookRecyclerAdapter.ItemClickListener  {
+public class BookListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Book>>, BookRecyclerAdapter.ItemClickListener {
 	
 	private static final String LOG_TAG = BookListActivity.class.getSimpleName();
 	
@@ -42,11 +43,17 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 		
 		// TODO Move below into own method
 		RecyclerView recyclerView = findViewById(R.id.recycler_view_layout);
+		
+		recyclerView.setHasFixedSize(true);
+		
 		bookRecyclerAdapter = new BookRecyclerAdapter(new ArrayList<Book>(), this);
 		recyclerView.setAdapter(bookRecyclerAdapter);
-		recyclerView.setHasFixedSize(true);
+		
 		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 		recyclerView.setLayoutManager(linearLayoutManager);
+		
+		DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), linearLayoutManager.getOrientation());
+		recyclerView.addItemDecoration(dividerItemDecoration);
 		
 		queryServer();
 	}

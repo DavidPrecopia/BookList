@@ -3,7 +3,8 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="@dimen/list_item_height"
-	android:orientation="horizontal">
+	android:orientation="horizontal"
+	android:layout_margin="4dp">
 	
 	<ImageView
 		android:id="@+id/book_thumbnail_image"
