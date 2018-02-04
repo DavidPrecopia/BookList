@@ -15,4 +15,5 @@
 	<string name="settings_default_value">20</string>
 	<string name="settings_max_result_title">Maximum Results (limit 40)</string>
 	<string name="settings_max_results_key">maximum_results</string>
+	<string name="main_activity_empty_fields">All text fields are empty</string>
 </resources>

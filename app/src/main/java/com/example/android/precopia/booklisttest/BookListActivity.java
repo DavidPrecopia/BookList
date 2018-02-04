@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Book>> {
-
+	
 	private static final String LOG_TAG = BookListActivity.class.getSimpleName();
 	
 	private BookAdapter bookAdapter;
@@ -37,9 +37,9 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 		setContentView(R.layout.list_view);
 		
 		progressBar = findViewById(R.id.progress_bar);
-		errorTextView = findViewById(R.id.error_text);
+		errorTextView = findViewById(R.id.tv_error);
 		
-		ListView listView = findViewById(R.id.list_view_layout);
+		ListView listView = findViewById(R.id.recycler_view_layout);
 		bookAdapter = new BookAdapter(BookListActivity.this, new ArrayList<Book>());
 		listView.setAdapter(bookAdapter);
 		listViewListener(listView);
@@ -112,6 +112,7 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 	
 	@Override
 	public void onLoadFinished(Loader<List<Book>> loader, List<Book> bookList) {
+		// TODO onLoadFinished
 		progressBar.setVisibility(View.GONE);
 		if (bookList == null || bookList.isEmpty()) {
 			errorTextView.setText(R.string.error_no_books_found);
@@ -122,6 +123,7 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 	
 	@Override
 	public void onLoaderReset(Loader<List<Book>> loader) {
+		// TODO onLoaderReset
 		bookAdapter.clear();
 	}
 }

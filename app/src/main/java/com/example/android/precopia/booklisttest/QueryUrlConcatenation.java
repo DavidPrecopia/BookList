@@ -11,8 +11,10 @@ final class QueryUrlConcatenation {
 			"https://www.googleapis.com/books/v1/volumes?q="
 	);
 	
+	// appendQueryParameter("+", IN_TITLE)
 	private static final String IN_TITLE = "+intitle:";
 	private static final String IN_AUTHOR = "+inauthor:";
+	// query
 	private static final String MAX_RESULTS = "&maxResults=";
 	
 	private QueryUrlConcatenation() {

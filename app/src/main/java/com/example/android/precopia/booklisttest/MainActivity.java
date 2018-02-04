@@ -42,14 +42,22 @@ public class MainActivity extends AppCompatActivity {
 	
 	private void evaluateUserInput() {
 		if (allTextFieldsAreEmpty()) {
-			Toast.makeText(MainActivity.this, "All text fields are empty", Toast.LENGTH_SHORT).show();
+			toastEmptyFields();
 		} else {
-			Intent intent = new Intent(MainActivity.this, BookListActivity.class);
-			intent.putExtra(getString(R.string.general_edit_text), generalEditText.getText().toString());
-			intent.putExtra(getString(R.string.title_edit_text), titleEditText.getText().toString());
-			intent.putExtra(getString(R.string.author_edit_text), authorEditText.getText().toString());
-			startActivity(intent);
+			intentSwitchActivity();
 		}
+	}
+	
+	private void toastEmptyFields() {
+		Toast.makeText(this, R.string.main_activity_empty_fields, Toast.LENGTH_SHORT).show();
+	}
+	
+	private void intentSwitchActivity() {
+		Intent intent = new Intent(MainActivity.this, BookListActivity.class);
+		intent.putExtra(getString(R.string.general_edit_text), generalEditText.getText().toString());
+		intent.putExtra(getString(R.string.title_edit_text), titleEditText.getText().toString());
+		intent.putExtra(getString(R.string.author_edit_text), authorEditText.getText().toString());
+		startActivity(intent);
 	}
 	
 	private boolean allTextFieldsAreEmpty() {
@@ -67,12 +75,12 @@ public class MainActivity extends AppCompatActivity {
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		int id = item.getItemId();
-		if (id == R.id.settings_item /* res/menu/menu */) {
-			Intent intent = new Intent(this, SettingsActivity.class);
-			startActivity(intent);
-			return true;
+		switch (item.getItemId()) {
+			case R.id.settings_item:
+				startActivity(new Intent(this, SettingsActivity.class));
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
 		}
-		return super.onOptionsItemSelected(item);
 	}
 }
