@@ -40,7 +40,7 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 		errorTextView = findViewById(R.id.tv_error);
 		
 		ListView listView = findViewById(R.id.recycler_view_layout);
-		bookAdapter = new BookAdapter(BookListActivity.this, new ArrayList<Book>());
+		bookAdapter = new BookAdapter(this, new ArrayList<Book>());
 		listView.setAdapter(bookAdapter);
 		listViewListener(listView);
 		
@@ -56,7 +56,7 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 		}
 	}
 	
-	
+	// TODO Fix OnItemClickListener
 	private void listViewListener(ListView listView) {
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
@@ -123,7 +123,7 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 	
 	@Override
 	public void onLoaderReset(Loader<List<Book>> loader) {
-		// TODO onLoaderReset
+		// TODO onLoaderReset adapter.swapData()
 		bookAdapter.clear();
 	}
 }
