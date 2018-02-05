@@ -17,6 +17,8 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -36,6 +38,7 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 	private ProgressBar progressBar;
 	private ImageView imageViewError;
 	private TextView textViewError;
+	private boolean connectedToInternet = false;
 	
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,12 +81,9 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 	private void queryServer() {
 		if (haveConnection()) {
 			getLoaderManager().initLoader(0, null, this);
+			connectedToInternet = true;
 		} else {
-			progressBar.setVisibility(View.GONE);
-			imageViewError.setVisibility(View.VISIBLE);
-			textViewError.setVisibility(View.VISIBLE);
-			imageViewError.setImageResource(R.drawable.ic_signal_wifi_off_black_48dp);
-			textViewError.setText(R.string.error_no_connection);
+			noInternetConnection();
 		}
 	}
 	
@@ -94,6 +94,48 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 		}
 		NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 		return networkInfo != null && networkInfo.isConnectedOrConnecting();
+	}
+	
+	private void noInternetConnection() {
+		progressBar.setVisibility(View.GONE);
+		imageViewError.setVisibility(View.VISIBLE);
+		textViewError.setVisibility(View.VISIBLE);
+		imageViewError.setImageResource(R.drawable.ic_signal_wifi_off_black_48dp);
+		textViewError.setText(R.string.error_no_connection);
+	}
+	
+	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		super.onPrepareOptionsMenu(menu);
+		if (connectedToInternet) {
+			MenuItem menuItem = menu.findItem(R.id.menu_item_refresh);
+			menuItem.setVisible(false);
+		}
+		return true;
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.book_list_menu, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.menu_item_refresh:
+				retryConnection();
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	private void retryConnection() {
+		imageViewError.setVisibility(View.GONE);
+		textViewError.setVisibility(View.GONE);
+		progressBar.setVisibility(View.VISIBLE);
+		queryServer();
 	}
 	
 	
@@ -122,13 +164,17 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 	public void onLoadFinished(Loader<List<Book>> loader, List<Book> bookList) {
 		progressBar.setVisibility(View.GONE);
 		if (bookList == null || bookList.isEmpty()) {
-			imageViewError.setVisibility(View.VISIBLE);
-			textViewError.setVisibility(View.VISIBLE);
-			imageViewError.setImageResource(R.drawable.ic_error_outline_black_48dp);
-			textViewError.setText(R.string.error_no_books_found);
+			noResults();
 		} else {
 			bookRecyclerAdapter.swapData(bookList);
 		}
+	}
+	
+	private void noResults() {
+		imageViewError.setVisibility(View.VISIBLE);
+		textViewError.setVisibility(View.VISIBLE);
+		imageViewError.setImageResource(R.drawable.ic_error_outline_black_48dp);
+		textViewError.setText(R.string.error_no_books_found);
 	}
 	
 	@Override

@@ -19,4 +19,5 @@
 	<string name="error_no_books_found">No books found</string>
 	<string name="error_no_book_info_url">No link available</string>
 	<string name="image_view_error">image view error</string>
+	<string name="refresh">Refresh</string>
 </resources>
