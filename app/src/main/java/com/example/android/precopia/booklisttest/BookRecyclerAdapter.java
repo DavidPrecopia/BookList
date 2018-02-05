@@ -58,23 +58,23 @@ class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapter.BookV
 		
 		private Book book;
 		
-		private ImageView thumbnail;
-		private TextView title;
-		private TextView author;
+		private ImageView thumbnailImageView;
+		private TextView titleTextView;
+		private TextView authorTextView;
 		
 		private ViewGroup parent;
 		
 		/**
 		 * Sets OnClickListener on itemView
 		 * @param itemView The list item view
-		 * @param parent Picasso needs context to set a thumbnail
+		 * @param parent Picasso needs context to set a thumbnailImageView
 		 */
 		BookViewHolder(View itemView, ViewGroup parent) {
 			super(itemView);
 			itemView.setOnClickListener(this);
-			thumbnail = itemView.findViewById(R.id.book_thumbnail_image);
-			title = itemView.findViewById(R.id.title_text_view);
-			author = itemView.findViewById(R.id.author_text_view);
+			thumbnailImageView = itemView.findViewById(R.id.book_thumbnail_image);
+			titleTextView = itemView.findViewById(R.id.title_text_view);
+			authorTextView = itemView.findViewById(R.id.author_text_view);
 			this.parent = parent;
 		}
 		
@@ -82,19 +82,31 @@ class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapter.BookV
 		void bindData(int position) {
 			this.book = bookList.get(position);
 			bindThumbnail(book.getThumbnailUrl());
-			title.setText(book.getTitle());
-			author.setText(book.getAuthor());
+			bindTitle();
+			bindAuthor();
+		}
+		
+		private void bindTitle() {
+			String titleFromBook = book.getTitle();
+			String titleString = TextUtils.isEmpty(titleFromBook) ? "No title listed" : titleFromBook;
+			titleTextView.setText(titleString);
+		}
+		
+		private void bindAuthor() {
+			String authorFromBook = book.getAuthor();
+			String authorString = TextUtils.isEmpty(authorFromBook) ? "No author listed" : authorFromBook;
+			authorTextView.setText(authorString);
 		}
 		
 		private void bindThumbnail(String url) {
 			if (TextUtils.isEmpty(url)) {
-				thumbnail.setImageResource(R.drawable.book_placeholder);
+				thumbnailImageView.setImageResource(R.drawable.book_placeholder);
 			} else {
 				Picasso.with(parent.getContext())
 						.load(url)
 						.placeholder(R.drawable.book_placeholder)
 						.error(R.drawable.book_placeholder)
-						.into(thumbnail);
+						.into(thumbnailImageView);
 			}
 		}
 		

@@ -28,16 +28,14 @@ class NetworkUtil {
 	
 	
 	static List<Book> fetchBookInformation(String requestUrl) {
-		URL url = createUrl(requestUrl);
-		
 		String jsonResponse = "";
 		try {
-			jsonResponse = httpRequest(url);
+			jsonResponse = httpRequest(createUrl(requestUrl));
 		} catch (IOException e) {
-			// Should catch the exception from disconnect() if I'm not mistaken
+			// Should catch the exception from the disconnect() method - if I'm not mistaken
 			Log.e(LOG_TAG, "Error closing InputStream", e);
 		}
-		return parseJsonResponse(jsonResponse);
+		return ParseJson.parseJsonResponse(jsonResponse);
 	}
 	
 	private static URL createUrl(String requestUrl) {
@@ -50,6 +48,9 @@ class NetworkUtil {
 		return url;
 	}
 	
+	/*
+	Not sure how to break up
+	 */
 	private static String httpRequest(URL url) throws IOException {
 		String jsonResponse = "";
 		
@@ -82,11 +83,11 @@ class NetworkUtil {
 	
 	
 	private static String readFromStream(InputStream inputStream) throws IOException {
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder dataFromInputStream = new StringBuilder();
 		if (inputStream != null) {
-			readInputStream(stringBuilder, getBufferedReader(inputStream));
+			readInputStream(dataFromInputStream, getBufferedReader(inputStream));
 		}
-		return stringBuilder.toString();
+		return dataFromInputStream.toString();
 	}
 	
 	@NonNull
@@ -95,10 +96,10 @@ class NetworkUtil {
 		return new BufferedReader(inputStreamReader);
 	}
 	
-	private static void readInputStream(StringBuilder stringBuilder, BufferedReader bufferedReader) throws IOException {
+	private static void readInputStream(StringBuilder dataFromInputStream, BufferedReader bufferedReader) throws IOException {
 		String line = bufferedReader.readLine();
 		while (line != null) {
-			stringBuilder.append(line);
+			dataFromInputStream.append(line);
 			line = bufferedReader.readLine();
 		}
 	}
@@ -113,52 +114,70 @@ class NetworkUtil {
 		}
 	}
 	
-	private static List<Book> parseJsonResponse(String jsonResponse) {
-		List<Book> bookList = new ArrayList<>();
-		try {
-			JSONArray jsonArrayOfBooks = new JSONObject(jsonResponse).optJSONArray("items");
-			if (jsonArrayOfBooks == null) {
-				return bookList;
-			}
-			for (int x = 0; x < jsonArrayOfBooks.length(); x++) {
-				JSONObject bookInfo = jsonArrayOfBooks.getJSONObject(x).getJSONObject("volumeInfo");
-				bookList.add(extractBookInfo(bookInfo));
-			}
-		} catch (JSONException e) {
-			Log.e(LOG_TAG, "parseJsonResponse method", e);
-		}
-		return bookList;
-	}
 	
-	private static Book extractBookInfo(JSONObject bookInfo) {
-		String title = "", authors = "", thumbnailUrl = "", bookInfoUrl = "";
-		try {
-			title = bookInfo.getString("title");
-			authors = getAuthors(bookInfo.getJSONArray("authors"));
-			thumbnailUrl =
-					bookInfo.isNull("imageLinks") ? "" : bookInfo.optJSONObject("imageLinks").getString("thumbnail");
-			bookInfoUrl =
-					bookInfo.isNull("infoLink") ? "" : bookInfo.optString("infoLink");
-		} catch (JSONException e) {
-			Log.e(LOG_TAG, "extractBookInfo method", e);
+	private static class ParseJson {
+		private static List<Book> parseJsonResponse(String jsonResponse) {
+			List<Book> bookList = new ArrayList<>();
+			try {
+				JSONArray jsonArrayOfBooks = new JSONObject(jsonResponse).optJSONArray("items");
+				if (jsonArrayOfBooks == null) {
+					return bookList;
+				}
+				for (int x = 0; x < jsonArrayOfBooks.length(); x++) {
+					JSONObject bookInfo = jsonArrayOfBooks.getJSONObject(x).getJSONObject("volumeInfo");
+					bookList.add(extractBookInfo(bookInfo));
+				}
+			} catch (JSONException e) {
+				Log.e(LOG_TAG, "parseJsonResponse method", e);
+			}
+			return bookList;
 		}
 		
-		return new Book(title, authors, thumbnailUrl, bookInfoUrl);
-	}
-	
-	private static String getAuthors(JSONArray jsonAuthorsArray) throws JSONException {
-		StringBuilder stringBuilder = new StringBuilder();
-		try {
-			for (int j = 0; j < jsonAuthorsArray.length(); j++) {
-				// Separate authors if multiple
-				if (j > 0) {
-					stringBuilder.append("; ");
-				}
-				stringBuilder.append(jsonAuthorsArray.get(0).toString());
+		
+		private static Book extractBookInfo(JSONObject bookInfo) {
+			String title = "", authors = "", thumbnailUrl = "", bookInfoUrl = "";
+			try {
+				title = getTitle(bookInfo);
+				authors = getAuthors(bookInfo);
+				thumbnailUrl = getThumbnailUrl(bookInfo);
+				bookInfoUrl = getBookInfoUrl(bookInfo);
+			} catch (JSONException e) {
+				Log.e(LOG_TAG, "extractBookInfo method", e);
 			}
-		} catch (JSONException e) {
-			Log.e(LOG_TAG, "getAuthors", e);
+			return new Book(title, authors, thumbnailUrl, bookInfoUrl);
 		}
-		return stringBuilder.toString();
+		
+		private static String getTitle(JSONObject bookInfo) throws JSONException {
+			return bookInfo.isNull("title") ? "" : bookInfo.getString("title");
+		}
+		
+		@NonNull
+		private static String getAuthors(JSONObject bookInfo) throws JSONException {
+			return bookInfo.isNull("authors") ? "" : getAuthors(bookInfo.getJSONArray("authors"));
+		}
+		
+		private static String getAuthors(JSONArray jsonAuthorsArray) throws JSONException {
+			StringBuilder authorsString = new StringBuilder();
+			try {
+				for (int j = 0; j < jsonAuthorsArray.length(); j++) {
+					// Separate authors if multiple
+					if (j > 0) {
+						authorsString.append("; ");
+					}
+					authorsString.append(jsonAuthorsArray.get(0).toString());
+				}
+			} catch (JSONException e) {
+				Log.e(LOG_TAG, "getAuthors", e);
+			}
+			return authorsString.toString();
+		}
+		
+		private static String getThumbnailUrl(JSONObject bookInfo) throws JSONException {
+			return bookInfo.isNull("imageLinks") ? "" : bookInfo.optJSONObject("imageLinks").getString("thumbnail");
+		}
+		
+		private static String getBookInfoUrl(JSONObject bookInfo) {
+			return bookInfo.isNull("infoLink") ? "" : bookInfo.optString("infoLink");
+		}
 	}
 }

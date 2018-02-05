@@ -20,6 +20,8 @@ final class QueryUrlConcatenation {
 	private QueryUrlConcatenation() {
 	}
 	
+	// TODO changed to Uri.Builder
+	
 	static String concatUrl(String general, String title, String author, String maxResults) {
 		StringBuilder url = new StringBuilder(BASE_URL);
 		
@@ -28,7 +30,7 @@ final class QueryUrlConcatenation {
 		url.append(appendAuthor(author));
 		url.append(appendMaxResults(maxResults));
 		
-		Log.v(LOG_TAG, url.toString());
+		Log.d(LOG_TAG, url.toString());
 		return url.toString();
 	}
 	
@@ -45,6 +47,6 @@ final class QueryUrlConcatenation {
 	}
 	
 	private static String appendMaxResults(String maxResults) {
-		return Integer.valueOf(maxResults) > 40 ? "40" : maxResults;
+		return Integer.valueOf(maxResults) > 40 ? "40" : (MAX_RESULTS + maxResults);
 	}
 }

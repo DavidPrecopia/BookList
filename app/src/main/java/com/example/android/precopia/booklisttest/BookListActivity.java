@@ -41,7 +41,7 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 		progressBar = findViewById(R.id.progress_bar);
 		errorTextView = findViewById(R.id.tv_error);
 		
-		// TODO Move below into own method
+		// TODO break RecyclerView set-up into own methods
 		RecyclerView recyclerView = findViewById(R.id.recycler_view_layout);
 		
 		recyclerView.setHasFixedSize(true);
@@ -63,7 +63,7 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 		if (haveConnection()) {
 			getLoaderManager().initLoader(0, null, this);
 		} else {
-			// TODO how am I handling ProgressBar, Error TextView, and list_item???
+			// TODO how am I handling ProgressBar, Error TextView, and list_item visibility???
 			progressBar.setVisibility(View.GONE);
 			errorTextView.setText(R.string.error_no_connection);
 		}
