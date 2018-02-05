@@ -49,7 +49,7 @@ public class BookActivity extends AppCompatActivity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.book_list_menu, menu);
+		getMenuInflater().inflate(R.menu.book_activity_menu, menu);
 		return true;
 	}
 	

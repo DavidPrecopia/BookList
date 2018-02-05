@@ -9,6 +9,12 @@
 		android:id="@+id/list_fragment"
 		android:name="com.example.android.precopia.booklisttest.ListFragment"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent" />
+		android:layout_height="match_parent"/>
+	
+	<fragment
+		android:id="@+id/details_fragment"
+		android:name="com.example.android.precopia.booklisttest.DetailsFragment"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"/>
 
 </LinearLayout>

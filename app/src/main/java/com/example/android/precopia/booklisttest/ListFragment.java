@@ -26,12 +26,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ListFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Book>>, BookRecyclerAdapter.ItemClickListener {
+public class ListFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Book>>, RecyclerAdapter.ItemClickListener {
 	
 	private static final String LOG_TAG = ListFragment.class.getSimpleName();
 	
 	private RecyclerView recyclerView;
-	private BookRecyclerAdapter bookRecyclerAdapter;
+	private RecyclerAdapter recyclerAdapter;
 	
 	private ProgressBar progressBar;
 	private ImageView imageViewError;
@@ -43,7 +43,7 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
 		View rootView = inflater.inflate(R.layout.list_fragment, container, false);
 		
 		recyclerView = rootView.findViewById(R.id.recycler_view_layout);
-		bookRecyclerAdapter = new BookRecyclerAdapter(new ArrayList<Book>(), this);
+		recyclerAdapter = new RecyclerAdapter(new ArrayList<Book>(), this);
 		
 		progressBar = rootView.findViewById(R.id.progress_bar);
 		imageViewError = rootView.findViewById(R.id.image_view_error);
@@ -58,7 +58,7 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
 	
 	private void setUpRecyclerView() {
 		recyclerView.setHasFixedSize(true);
-		recyclerView.setAdapter(bookRecyclerAdapter);
+		recyclerView.setAdapter(recyclerAdapter);
 		LinearLayoutManager linearLayoutManager = layoutManager();
 		dividerDecoration(linearLayoutManager);
 	}
@@ -130,7 +130,7 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
 		if (bookList == null || bookList.isEmpty()) {
 			displayNoResultsError();
 		} else {
-			bookRecyclerAdapter.swapData(bookList);
+			recyclerAdapter.swapData(bookList);
 		}
 	}
 	
@@ -143,7 +143,7 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
 	
 	@Override
 	public void onLoaderReset(Loader<List<Book>> loader) {
-		bookRecyclerAdapter.swapData(new ArrayList<Book>());
+		recyclerAdapter.swapData(new ArrayList<Book>());
 	}
 	
 	

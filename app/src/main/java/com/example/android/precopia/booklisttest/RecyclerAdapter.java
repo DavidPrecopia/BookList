@@ -13,7 +13,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapter.BookViewHolder> {
+class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BookHolder> {
 	
 	interface ItemClickListener {
 		void onClick(String bookInfoUrl);
@@ -23,20 +23,20 @@ class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapter.BookV
 	
 	private List<Book> bookList;
 	
-	BookRecyclerAdapter(List<Book> bookList, ItemClickListener itemClickListener) {
+	RecyclerAdapter(List<Book> bookList, ItemClickListener itemClickListener) {
 		this.bookList = new ArrayList<>(bookList);
 		this.itemClickListener = itemClickListener;
 	}
 	
 	
 	@Override
-	public BookViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+	public BookHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
-		return new BookViewHolder(view, parent);
+		return new BookHolder(view, parent);
 	}
 	
 	@Override
-	public void onBindViewHolder(BookViewHolder holder, int position) {
+	public void onBindViewHolder(BookHolder holder, int position) {
 		holder.bindData(position);
 	}
 	
@@ -54,7 +54,7 @@ class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapter.BookV
 	
 	
 	
-	class BookViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+	class BookHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 		
 		private Book book;
 		
@@ -68,7 +68,7 @@ class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapter.BookV
 		 * @param itemView The list item view
 		 * @param parent Picasso needs context to set a thumbnailImageView
 		 */
-		BookViewHolder(View itemView, ViewGroup parent) {
+		BookHolder(View itemView, ViewGroup parent) {
 			super(itemView);
 			itemView.setOnClickListener(this);
 			thumbnailImageView = itemView.findViewById(R.id.book_thumbnail_image);

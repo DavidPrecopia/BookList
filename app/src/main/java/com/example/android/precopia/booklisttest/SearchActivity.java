@@ -21,7 +21,7 @@ public class SearchActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.search_main);
+		setContentView(R.layout.search_activity);
 		
 		generalEditText = findViewById(R.id.general_edit_text);
 		titleEditText = findViewById(R.id.title_edit_text);
@@ -69,7 +69,7 @@ public class SearchActivity extends AppCompatActivity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main_activity_menu, menu);
+		getMenuInflater().inflate(R.menu.search_activity_menu, menu);
 		return true;
 	}
 	
