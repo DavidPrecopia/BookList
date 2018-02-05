@@ -20,10 +20,11 @@ public class SettingsActivity extends AppCompatActivity {
 		@Override
 		public void onCreate(@Nullable Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			addPreferencesFromResource(R.xml.settings_main);
+			addPreferencesFromResource(R.xml.preferences);
 			
-			Preference maxResultsPreference = findPreference(getString(R.string.settings_max_results_key));
-			bindPreferenceSummaryToValue(maxResultsPreference);
+			bindPreferenceSummaryToValue(
+					findPreference(getString(R.string.settings_max_results_key))
+			);
 		}
 		
 		/**

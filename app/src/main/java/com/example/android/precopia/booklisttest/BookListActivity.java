@@ -10,6 +10,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -28,6 +29,7 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 	
 	private static final String LOG_TAG = BookListActivity.class.getSimpleName();
 	
+	private RecyclerView recyclerView;
 	private BookRecyclerAdapter bookRecyclerAdapter;
 	
 	private ProgressBar progressBar;
@@ -36,26 +38,37 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.list_view);
+		setContentView(R.layout.book_list_activity);
+		
+		recyclerView = findViewById(R.id.recycler_view_layout);
+		bookRecyclerAdapter = new BookRecyclerAdapter(new ArrayList<Book>(), this);
 		
 		progressBar = findViewById(R.id.progress_bar);
 		errorTextView = findViewById(R.id.tv_error);
 		
-		// TODO break RecyclerView set-up into own methods
-		RecyclerView recyclerView = findViewById(R.id.recycler_view_layout);
-		
-		recyclerView.setHasFixedSize(true);
-		
-		bookRecyclerAdapter = new BookRecyclerAdapter(new ArrayList<Book>(), this);
-		recyclerView.setAdapter(bookRecyclerAdapter);
-		
-		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-		recyclerView.setLayoutManager(linearLayoutManager);
-		
-		DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), linearLayoutManager.getOrientation());
-		recyclerView.addItemDecoration(dividerItemDecoration);
+		setUpRecyclerView();
 		
 		queryServer();
+	}
+	
+	
+	private void setUpRecyclerView() {
+		recyclerView.setHasFixedSize(true);
+		recyclerView.setAdapter(bookRecyclerAdapter);
+		LinearLayoutManager linearLayoutManager = layoutManager();
+		dividerDecoration(linearLayoutManager);
+	}
+	
+	@NonNull
+	private LinearLayoutManager layoutManager() {
+		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+		recyclerView.setLayoutManager(linearLayoutManager);
+		return linearLayoutManager;
+	}
+	
+	private void dividerDecoration(LinearLayoutManager linearLayoutManager) {
+		DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), linearLayoutManager.getOrientation());
+		recyclerView.addItemDecoration(dividerItemDecoration);
 	}
 	
 	
@@ -63,8 +76,8 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 		if (haveConnection()) {
 			getLoaderManager().initLoader(0, null, this);
 		} else {
-			// TODO how am I handling ProgressBar, Error TextView, and list_item visibility???
 			progressBar.setVisibility(View.GONE);
+			errorTextView.setVisibility(View.VISIBLE);
 			errorTextView.setText(R.string.error_no_connection);
 		}
 	}
@@ -104,6 +117,7 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 	public void onLoadFinished(Loader<List<Book>> loader, List<Book> bookList) {
 		progressBar.setVisibility(View.GONE);
 		if (bookList == null || bookList.isEmpty()) {
+			errorTextView.setVisibility(View.VISIBLE);
 			errorTextView.setText(R.string.error_no_books_found);
 		} else {
 			bookRecyclerAdapter.swapData(bookList);
@@ -119,7 +133,7 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 	@Override
 	public void onClick(String bookInfoUrl) {
 		if (TextUtils.isEmpty(bookInfoUrl)) {
-			Toast.makeText(BookListActivity.this, R.string.no_book_info_url_error, Toast.LENGTH_SHORT).show();
+			Toast.makeText(BookListActivity.this, R.string.error_no_book_info_url, Toast.LENGTH_SHORT).show();
 		} else {
 			intentWebBrowser(bookInfoUrl);
 		}

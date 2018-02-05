@@ -1,19 +1,21 @@
 <resources>
 	<string name="app_name">Book List Test</string>
-
+	<string name="book_list_activity_label">List of Books</string>
+	
+	<string name="general_edit_text">General term</string>
 	<string name="title_edit_text">Title</string>
 	<string name="author_edit_text">Author</string>
 	<string name="search_button_text">search</string>
 	
-	<string name="content_description">Thumbnail of book</string>
-	<string name="no_book_info_url_error">No link available</string>
-	<string name="general_edit_text">General term</string>
-	<string name="error_no_connection">No internet connection</string>
-	<string name="error_no_books_found">No books found</string>
-	<string name="book_list_activity_label">List of Books</string>
 	<string name="settings_name">Settings</string>
 	<string name="settings_default_value">20</string>
-	<string name="settings_max_result_title">Maximum Results (limit 40)</string>
+	<string name="settings_max_result_title">Maximum Results</string>
 	<string name="settings_max_results_key">maximum_results</string>
-	<string name="main_activity_empty_fields">All text fields are empty</string>
+	
+	<string name="content_description">Thumbnail of book</string>
+	
+	<string name="error_empty_fields">All text fields are empty</string>
+	<string name="error_no_connection">No internet connection</string>
+	<string name="error_no_books_found">No books found</string>
+	<string name="error_no_book_info_url">No link available</string>
 </resources>

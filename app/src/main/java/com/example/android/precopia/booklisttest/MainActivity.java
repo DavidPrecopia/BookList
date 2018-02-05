@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 	}
 	
 	private void toastEmptyFields() {
-		Toast.makeText(this, R.string.main_activity_empty_fields, Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
 	}
 	
 	private void intentSwitchActivity() {
