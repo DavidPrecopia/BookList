@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity {
 	
 	private EditText generalEditText;
 	private EditText titleEditText;
@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.search_main);
 		
 		generalEditText = findViewById(R.id.general_edit_text);
 		titleEditText = findViewById(R.id.title_edit_text);
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 	}
 	
 	private void intentSwitchActivity() {
-		Intent intent = new Intent(MainActivity.this, BookListActivity.class);
+		Intent intent = new Intent(SearchActivity.this, BookActivity.class);
 		intent.putExtra(getString(R.string.general_edit_text), generalEditText.getText().toString());
 		intent.putExtra(getString(R.string.title_edit_text), titleEditText.getText().toString());
 		intent.putExtra(getString(R.string.author_edit_text), authorEditText.getText().toString());

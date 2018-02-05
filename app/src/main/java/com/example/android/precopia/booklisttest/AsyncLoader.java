@@ -5,11 +5,11 @@ import android.content.Context;
 
 import java.util.List;
 
-class BookAsyncLoader extends AsyncTaskLoader<List<Book>> {
+class AsyncLoader extends AsyncTaskLoader<List<Book>> {
 	
 	private String url;
 	
-	BookAsyncLoader(Context context, String url) {
+	AsyncLoader(Context context, String url) {
 		super(context);
 		this.url = url;
 	}

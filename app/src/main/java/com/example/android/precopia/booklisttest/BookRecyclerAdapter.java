@@ -65,7 +65,6 @@ class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapter.BookV
 		private ViewGroup parent;
 		
 		/**
-		 * Sets OnClickListener on itemView
 		 * @param itemView The list item view
 		 * @param parent Picasso needs context to set a thumbnailImageView
 		 */
