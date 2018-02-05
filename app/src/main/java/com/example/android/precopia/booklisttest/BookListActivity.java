@@ -18,6 +18,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +34,8 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 	private BookRecyclerAdapter bookRecyclerAdapter;
 	
 	private ProgressBar progressBar;
-	private TextView errorTextView;
+	private ImageView imageViewError;
+	private TextView textViewError;
 	
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,7 +46,8 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 		bookRecyclerAdapter = new BookRecyclerAdapter(new ArrayList<Book>(), this);
 		
 		progressBar = findViewById(R.id.progress_bar);
-		errorTextView = findViewById(R.id.tv_error);
+		imageViewError = findViewById(R.id.image_view_error);
+		textViewError = findViewById(R.id.text_view_error);
 		
 		setUpRecyclerView();
 		
@@ -77,8 +80,10 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 			getLoaderManager().initLoader(0, null, this);
 		} else {
 			progressBar.setVisibility(View.GONE);
-			errorTextView.setVisibility(View.VISIBLE);
-			errorTextView.setText(R.string.error_no_connection);
+			imageViewError.setVisibility(View.VISIBLE);
+			textViewError.setVisibility(View.VISIBLE);
+			imageViewError.setImageResource(R.drawable.ic_signal_wifi_off_black_48dp);
+			textViewError.setText(R.string.error_no_connection);
 		}
 	}
 	
@@ -117,8 +122,10 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 	public void onLoadFinished(Loader<List<Book>> loader, List<Book> bookList) {
 		progressBar.setVisibility(View.GONE);
 		if (bookList == null || bookList.isEmpty()) {
-			errorTextView.setVisibility(View.VISIBLE);
-			errorTextView.setText(R.string.error_no_books_found);
+			imageViewError.setVisibility(View.VISIBLE);
+			textViewError.setVisibility(View.VISIBLE);
+			imageViewError.setImageResource(R.drawable.ic_error_outline_black_48dp);
+			textViewError.setText(R.string.error_no_books_found);
 		} else {
 			bookRecyclerAdapter.swapData(bookList);
 		}

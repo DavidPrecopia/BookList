@@ -100,12 +100,12 @@ class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapter.BookV
 		
 		private void bindThumbnail(String url) {
 			if (TextUtils.isEmpty(url)) {
-				thumbnailImageView.setImageResource(R.drawable.book_placeholder);
+				thumbnailImageView.setImageResource(R.drawable.ic_book_black_24dp);
 			} else {
 				Picasso.with(parent.getContext())
 						.load(url)
-						.placeholder(R.drawable.book_placeholder)
-						.error(R.drawable.book_placeholder)
+						.placeholder(R.drawable.ic_book_black_24dp)
+						.error(R.drawable.ic_book_black_24dp)
 						.into(thumbnailImageView);
 			}
 		}

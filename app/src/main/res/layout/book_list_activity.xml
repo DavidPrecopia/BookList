@@ -17,12 +17,22 @@
 		android:layout_height="match_parent"
 		android:orientation="vertical" />
 	
-	<TextView
-		android:id="@+id/tv_error"
+	<ImageView
+		android:id="@+id/image_view_error"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_centerInParent="true"
-		android:textAppearance="?android:textAppearanceMedium"
+		android:contentDescription="@string/image_view_error"
 		android:visibility="gone" />
+	
+	<TextView
+		android:id="@+id/text_view_error"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/image_view_error"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="@dimen/standard_margin"
+		android:textAppearance="?android:textAppearanceMedium"
+		android:visibility="gone"/>
 
 </RelativeLayout>
