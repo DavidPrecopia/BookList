@@ -1,15 +1,17 @@
-package com.example.android.precopia.booklisttest;
+package com.example.android.precopia.booklisttest.helpers;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 
+import com.example.android.precopia.booklisttest.activites.Book;
+
 import java.util.List;
 
-class AsyncLoader extends AsyncTaskLoader<List<Book>> {
+public class AsyncLoader extends AsyncTaskLoader<List<Book>> {
 	
 	private String url;
 	
-	AsyncLoader(Context context, String url) {
+	public AsyncLoader(Context context, String url) {
 		super(context);
 		this.url = url;
 	}

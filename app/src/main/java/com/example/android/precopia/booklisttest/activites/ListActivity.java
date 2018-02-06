@@ -1,4 +1,4 @@
-package com.example.android.precopia.booklisttest;
+package com.example.android.precopia.booklisttest.activites;
 
 import android.app.LoaderManager;
 import android.content.Intent;
@@ -22,14 +22,19 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.precopia.booklisttest.R;
+import com.example.android.precopia.booklisttest.helpers.AsyncLoader;
+import com.example.android.precopia.booklisttest.helpers.NetworkUtil;
+import com.example.android.precopia.booklisttest.helpers.QueryUrlConcatenation;
+import com.example.android.precopia.booklisttest.helpers.RecyclerAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Book>>, RecyclerAdapter.ItemClickListener {
+public class ListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Book>>, RecyclerAdapter.ItemClickListener {
 	
-	private static final String LOG_TAG = BookListActivity.class.getSimpleName();
+	private static final String LOG_TAG = ListActivity.class.getSimpleName();
 	
-	// Initialized in the onCreate method
 	static boolean connectedToInternet;
 	
 	private RecyclerView recyclerView;
@@ -43,7 +48,7 @@ public class BookListActivity extends AppCompatActivity implements LoaderManager
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.book_list_activity);
+		setContentView(R.layout.activity_list);
 		
 		recyclerView = findViewById(R.id.recycler_view_layout);
 		recyclerAdapter = new RecyclerAdapter(new ArrayList<Book>(), this);

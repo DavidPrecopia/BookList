@@ -1,4 +1,4 @@
-package com.example.android.precopia.booklisttest;
+package com.example.android.precopia.booklisttest.activites;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.android.precopia.booklisttest.R;
+
 public class SearchActivity extends AppCompatActivity {
 	
 	private EditText generalEditText;
@@ -21,7 +23,7 @@ public class SearchActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.search_activity);
+		setContentView(R.layout.activity_search);
 		
 		generalEditText = findViewById(R.id.general_edit_text);
 		titleEditText = findViewById(R.id.title_edit_text);
@@ -53,7 +55,7 @@ public class SearchActivity extends AppCompatActivity {
 	}
 	
 	private void intentSwitchActivity() {
-		Intent intent = new Intent(SearchActivity.this, BookListActivity.class);
+		Intent intent = new Intent(SearchActivity.this, ListActivity.class);
 		intent.putExtra(getString(R.string.general_edit_text), generalEditText.getText().toString());
 		intent.putExtra(getString(R.string.title_edit_text), titleEditText.getText().toString());
 		intent.putExtra(getString(R.string.author_edit_text), authorEditText.getText().toString());

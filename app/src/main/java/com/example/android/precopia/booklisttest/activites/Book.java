@@ -1,31 +1,31 @@
-package com.example.android.precopia.booklisttest;
+package com.example.android.precopia.booklisttest.activites;
 
-class Book {
+public class Book {
 	private String title;
 	private String author;
 	private String thumbnailUrl;
 	private String bookInfoUrl;
 	
-	Book(String title, String author, String thumbnailUrl, String bookInfoUrl) {
+	public Book(String title, String author, String thumbnailUrl, String bookInfoUrl) {
 		this.title = title;
 		this.author = author;
 		this.thumbnailUrl = thumbnailUrl;
 		this.bookInfoUrl = bookInfoUrl;
 	}
 	
-	String getTitle() {
+	public String getTitle() {
 		return title;
 	}
 	
-	String getAuthor() {
+	public String getAuthor() {
 		return author;
 	}
 	
-	String getThumbnailUrl() {
+	public String getThumbnailUrl() {
 		return thumbnailUrl;
 	}
 	
-	String getBookInfoUrl() {
+	public String getBookInfoUrl() {
 		return bookInfoUrl;
 	}
 }

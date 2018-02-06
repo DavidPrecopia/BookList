@@ -1,10 +1,12 @@
-package com.example.android.precopia.booklisttest;
+package com.example.android.precopia.booklisttest.helpers;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.util.Log;
+
+import com.example.android.precopia.booklisttest.activites.Book;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,7 +24,7 @@ import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
-class NetworkUtil {
+public class NetworkUtil {
 	
 	private static final String LOG_TAG = NetworkUtil.class.getSimpleName();
 	
@@ -30,7 +32,7 @@ class NetworkUtil {
 	}
 	
 	
-	static boolean haveConnection(Context context) {
+	public static boolean haveConnection(Context context) {
 		ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		if (connectivityManager == null) {
 			return false;
@@ -40,7 +42,7 @@ class NetworkUtil {
 	}
 	
 	
-	static List<Book> fetchBookInformation(String requestUrl) {
+	public static List<Book> fetchBookInformation(String requestUrl) {
 		String jsonResponse = "";
 		try {
 			jsonResponse = httpRequest(createUrl(requestUrl));

@@ -1,9 +1,9 @@
-package com.example.android.precopia.booklisttest;
+package com.example.android.precopia.booklisttest.helpers;
 
 import android.text.TextUtils;
 import android.util.Log;
 
-final class QueryUrlConcatenation {
+public final class QueryUrlConcatenation {
 	
 	private static final String LOG_TAG = QueryUrlConcatenation.class.getSimpleName();
 	
@@ -17,7 +17,7 @@ final class QueryUrlConcatenation {
 	private QueryUrlConcatenation() {
 	}
 	
-	static String concatUrl(String generalQuery, String title, String author, String maxResults) {
+	public static String concatUrl(String generalQuery, String title, String author, String maxResults) {
 		StringBuilder url = new StringBuilder(BASE_URL);
 		
 		url.append(appendGeneral(generalQuery));

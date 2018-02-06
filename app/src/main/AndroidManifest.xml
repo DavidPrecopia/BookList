@@ -12,21 +12,22 @@
 		android:roundIcon="@mipmap/ic_launcher_round"
 		android:supportsRtl="true"
 		android:theme="@style/AppTheme">
-		<activity android:name=".SearchActivity">
+		<activity android:name=".activites.SearchActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		
-		<activity android:name=".SettingsActivity"
-			android:label="@string/settings_name"
-			android:parentActivityName=".SearchActivity"/>
-		
 		<activity
-			android:name=".BookListActivity"
+			android:name=".activites.SettingsActivity"
+			android:label="@string/settings_name"
+			android:parentActivityName=".activites.SearchActivity" />
+		<activity
+			android:name=".activites.ListActivity"
 			android:label="@string/book_list_activity_label"
-			android:parentActivityName=".SearchActivity" />
+			android:parentActivityName=".activites.SearchActivity" />
+		<activity android:name=".activites.DetailActivity"></activity>
 	</application>
+
 </manifest>

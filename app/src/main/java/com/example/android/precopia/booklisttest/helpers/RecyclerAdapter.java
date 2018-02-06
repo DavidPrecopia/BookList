@@ -1,4 +1,4 @@
-package com.example.android.precopia.booklisttest;
+package com.example.android.precopia.booklisttest.helpers;
 
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -8,14 +8,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.android.precopia.booklisttest.R;
+import com.example.android.precopia.booklisttest.activites.Book;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BookHolder> {
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BookHolder> {
 	
-	interface ItemClickListener {
+	public interface ItemClickListener {
 		void onClick(String bookInfoUrl);
 	}
 	
@@ -23,7 +25,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BookHolder> {
 	
 	private List<Book> bookList;
 	
-	RecyclerAdapter(List<Book> bookList, ItemClickListener itemClickListener) {
+	public RecyclerAdapter(List<Book> bookList, ItemClickListener itemClickListener) {
 		this.bookList = new ArrayList<>(bookList);
 		this.itemClickListener = itemClickListener;
 	}
@@ -46,7 +48,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BookHolder> {
 	}
 	
 	
-	void swapData(List<Book> newList) {
+	public void swapData(List<Book> newList) {
 		bookList.clear();
 		this.bookList.addAll(newList);
 		notifyDataSetChanged();
