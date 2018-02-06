@@ -1,5 +1,8 @@
 package com.example.android.precopia.booklisttest;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -24,6 +27,16 @@ class NetworkUtil {
 	private static final String LOG_TAG = NetworkUtil.class.getSimpleName();
 	
 	private NetworkUtil() {
+	}
+	
+	
+	static boolean haveConnection(Context context) {
+		ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		if (connectivityManager == null) {
+			return false;
+		}
+		NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+		return networkInfo != null && networkInfo.isConnectedOrConnecting();
 	}
 	
 	

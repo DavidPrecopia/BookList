@@ -1,6 +1,5 @@
 package com.example.android.precopia.booklisttest;
 
-import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
@@ -10,13 +9,14 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -25,10 +25,12 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class ListFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Book>>, RecyclerAdapter.ItemClickListener {
+public class BookListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Book>>, RecyclerAdapter.ItemClickListener {
 	
-	private static final String LOG_TAG = ListFragment.class.getSimpleName();
+	private static final String LOG_TAG = BookListActivity.class.getSimpleName();
+	
+	// Initialized in the onCreate method
+	static boolean connectedToInternet;
 	
 	private RecyclerView recyclerView;
 	private RecyclerAdapter recyclerAdapter;
@@ -38,25 +40,59 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
 	private TextView textViewError;
 	
 	
-	
-	@Nullable
 	@Override
-	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.list_fragment, container, false);
+	protected void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.book_list_activity);
 		
-		recyclerView = rootView.findViewById(R.id.recycler_view_layout);
+		recyclerView = findViewById(R.id.recycler_view_layout);
 		recyclerAdapter = new RecyclerAdapter(new ArrayList<Book>(), this);
 		
-		progressBar = rootView.findViewById(R.id.progress_bar);
-		imageViewError = rootView.findViewById(R.id.image_view_error);
-		textViewError = rootView.findViewById(R.id.text_view_error);
+		progressBar = findViewById(R.id.progress_bar);
+		imageViewError = findViewById(R.id.image_view_error);
+		textViewError = findViewById(R.id.text_view_error);
 		
 		setUpRecyclerView();
 		
-		queryServer();
+		connectedToInternet = NetworkUtil.haveConnection(this);
 		
-		return rootView;
+		queryServer();
 	}
+	
+	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		super.onPrepareOptionsMenu(menu);
+		if (connectedToInternet) {
+			MenuItem menuItem = menu.findItem(R.id.menu_item_refresh);
+			menuItem.setVisible(false);
+		}
+		return true;
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.book_activity_menu, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.menu_item_refresh:
+				retryConnection();
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	private void retryConnection() {
+		imageViewError.setVisibility(View.GONE);
+		textViewError.setVisibility(View.GONE);
+		progressBar.setVisibility(View.VISIBLE);
+		queryServer();
+	}
+	
 	
 	private void setUpRecyclerView() {
 		recyclerView.setHasFixedSize(true);
@@ -67,7 +103,7 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
 	
 	@NonNull
 	private LinearLayoutManager layoutManager() {
-		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 		recyclerView.setLayoutManager(linearLayoutManager);
 		return linearLayoutManager;
 	}
@@ -79,7 +115,7 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
 	
 	
 	private void queryServer() {
-		if (BookActivity.connectedToInternet) {
+		if (connectedToInternet) {
 			getLoaderManager().initLoader(0, null, this);
 		} else {
 			displayNoConnectionError();
@@ -95,23 +131,13 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
 	}
 	
 	
-	
-	// TODO retryConnection (connect to Refresh MenuItem)
-//	private void retryConnection() {
-//		imageViewError.setVisibility(View.GONE);
-//		textViewError.setVisibility(View.GONE);
-//		progressBar.setVisibility(View.VISIBLE);
-//		queryServer();
-//	}
-	
-	
 	@Override
 	public Loader<List<Book>> onCreateLoader(int id, Bundle args) {
-		return new AsyncLoader(getActivity(), getUrl());
+		return new AsyncLoader(this, getUrl());
 	}
 	
 	private String getUrl() {
-		Intent intent = getActivity().getIntent();
+		Intent intent = getIntent();
 		String general = intent.getStringExtra(getString(R.string.general_edit_text));
 		String title = intent.getStringExtra(getString(R.string.title_edit_text));
 		String author = intent.getStringExtra(getString(R.string.author_edit_text));
@@ -119,7 +145,7 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
 	}
 	
 	private String getMaxResults() {
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 		return sharedPreferences.getString(
 				getString(R.string.settings_max_results_key),
 				getString(R.string.settings_default_value)
@@ -149,18 +175,21 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
 	}
 	
 	
+	/**
+	 * Implements single method from RecyclerAdapter.ItemClickListener interface
+	 */
 	@Override
 	public void onClick(String bookInfoUrl) {
 		if (TextUtils.isEmpty(bookInfoUrl)) {
-			Toast.makeText(getActivity(), R.string.error_no_book_info_url, Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, R.string.error_no_book_info_url, Toast.LENGTH_SHORT).show();
 		} else {
-			intentWebBrowser(bookInfoUrl);
+			openWebBrowser(bookInfoUrl);
 		}
 	}
 	
-	private void intentWebBrowser(String bookInfoUrl) {
+	private void openWebBrowser(String bookInfoUrl) {
 		Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(bookInfoUrl));
-		if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+		if (intent.resolveActivity(getPackageManager()) != null) {
 			startActivity(intent);
 		}
 	}

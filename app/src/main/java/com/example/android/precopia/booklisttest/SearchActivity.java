@@ -53,7 +53,7 @@ public class SearchActivity extends AppCompatActivity {
 	}
 	
 	private void intentSwitchActivity() {
-		Intent intent = new Intent(SearchActivity.this, BookActivity.class);
+		Intent intent = new Intent(SearchActivity.this, BookListActivity.class);
 		intent.putExtra(getString(R.string.general_edit_text), generalEditText.getText().toString());
 		intent.putExtra(getString(R.string.title_edit_text), titleEditText.getText().toString());
 		intent.putExtra(getString(R.string.author_edit_text), authorEditText.getText().toString());

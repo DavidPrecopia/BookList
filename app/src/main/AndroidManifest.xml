@@ -25,7 +25,7 @@
 			android:parentActivityName=".SearchActivity"/>
 		
 		<activity
-			android:name=".BookActivity"
+			android:name=".BookListActivity"
 			android:label="@string/book_list_activity_label"
 			android:parentActivityName=".SearchActivity" />
 	</application>
