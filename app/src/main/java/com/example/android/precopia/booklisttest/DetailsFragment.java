@@ -12,6 +12,14 @@ import android.widget.TextView;
 public class DetailsFragment extends Fragment {
 	
 	
+	public static DetailsFragment newInstance() {
+		Bundle args = new Bundle();
+		
+		DetailsFragment fragment = new DetailsFragment();
+		fragment.setArguments(args);
+		return fragment;
+	}
+	
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {

@@ -27,6 +27,7 @@ public class BookActivity extends AppCompatActivity {
 		setContentView(R.layout.book_activity);
 	}
 	
+	// TODO move to NetworkUtil
 	private boolean haveConnection() {
 		ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		if (connectivityManager == null) {

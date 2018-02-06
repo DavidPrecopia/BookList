@@ -37,6 +37,8 @@ public class ListFragment extends Fragment implements LoaderManager.LoaderCallba
 	private ImageView imageViewError;
 	private TextView textViewError;
 	
+	
+	
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
