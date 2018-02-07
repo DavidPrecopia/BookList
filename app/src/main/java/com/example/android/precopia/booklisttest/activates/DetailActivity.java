@@ -24,15 +24,23 @@ public class DetailActivity extends AppCompatActivity {
 		
 		book = getIntent().getParcelableExtra(DetailActivity.class.getSimpleName());
 		
-		bindImage();
-		bindTitle();
-		bindAuthor();
-	
-		// TODO bindDescription
+		bindData();
 		
 		clickListener();
 	}
 	
+	
+	private void bindData() {
+		bindImage();
+		bindTitle();
+		bindAuthor();
+		bindDescription();
+	}
+	
+	private void bindDescription() {
+		TextView description = findViewById(R.id.text_view_description);
+		description.setText(book.getDescription());
+	}
 	
 	private void bindImage() {
 		ImageView thumbnail = findViewById(R.id.book_thumbnail_image);

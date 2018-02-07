@@ -7,12 +7,14 @@ public class Book implements Parcelable {
 	private String title;
 	private String author;
 	private String thumbnailUrl;
+	private StringBuilder description;
 	private String bookInfoUrl;
 	
-	public Book(String title, String author, String thumbnailUrl, String bookInfoUrl) {
+	public Book(String title, String author, String thumbnailUrl, String description, String bookInfoUrl) {
 		this.title = title;
 		this.author = author;
 		this.thumbnailUrl = thumbnailUrl;
+		this.description = new StringBuilder(description);
 		this.bookInfoUrl = bookInfoUrl;
 	}
 	
@@ -29,10 +31,13 @@ public class Book implements Parcelable {
 		return thumbnailUrl;
 	}
 	
-	public String getBookInfoUrl() {
-		return bookInfoUrl;
+	StringBuilder getDescription() {
+		return description;
 	}
 	
+	String getBookInfoUrl() {
+		return bookInfoUrl;
+	}
 	
 	/**
 	 * Comments from Stack Overflow
