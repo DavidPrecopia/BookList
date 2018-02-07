@@ -55,7 +55,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BookHo
 	}
 	
 	
-	
 	class BookHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 		
 		private Book book;
@@ -68,7 +67,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BookHo
 		
 		/**
 		 * @param itemView The list item view
-		 * @param parent to provide context
+		 * @param parent   to provide context
 		 */
 		BookHolder(View itemView, ViewGroup parent) {
 			super(itemView);
@@ -82,33 +81,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BookHo
 		
 		void bindData(int position) {
 			this.book = bookList.get(position);
+			
 			bindThumbnail(book.getThumbnailUrl());
-			bindTitle();
-			bindAuthor();
+			titleTextView.setText(book.getTitle());
+			authorTextView.setText(book.getAuthor());
 		}
 		
 		private void bindThumbnail(String url) {
 			if (TextUtils.isEmpty(url)) {
 				thumbnailImageView.setImageResource(R.drawable.ic_book_black_24dp);
 			} else {
-				Picasso.with(parent.getContext())
-						.load(url)
-						.placeholder(R.drawable.ic_book_black_24dp)
-						.error(R.drawable.ic_book_black_24dp)
-						.into(thumbnailImageView);
+				Picasso.with(parent.getContext()).load(url).placeholder(R.drawable.ic_book_black_24dp).error(R.drawable.ic_book_black_24dp).into(thumbnailImageView);
 			}
-		}
-		
-		private void bindTitle() {
-			String titleFromBook = book.getTitle();
-			String titleString = TextUtils.isEmpty(titleFromBook) ? parent.getContext().getString(R.string.no_book_title) : titleFromBook;
-			titleTextView.setText(titleString);
-		}
-		
-		private void bindAuthor() {
-			String authorFromBook = book.getAuthor();
-			String authorString = TextUtils.isEmpty(authorFromBook) ? parent.getContext().getString(R.string.no_book_author) : authorFromBook;
-			authorTextView.setText(authorString);
 		}
 		
 		

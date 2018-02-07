@@ -15,6 +15,8 @@ import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity {
 	
+	private static final String LOG_TAG = DetailActivity.class.getSimpleName();
+	
 	private Book book;
 	
 	@Override
@@ -37,22 +39,13 @@ public class DetailActivity extends AppCompatActivity {
 		bindDescription();
 	}
 	
-	private void bindDescription() {
-		TextView description = findViewById(R.id.text_view_description);
-		description.setText(book.getDescription());
-	}
-	
 	private void bindImage() {
 		ImageView thumbnail = findViewById(R.id.book_thumbnail_image);
 		String url = book.getThumbnailUrl();
 		if (TextUtils.isEmpty(url)) {
 			thumbnail.setImageResource(R.drawable.ic_book_black_24dp);
 		} else {
-			Picasso.with(this)
-					.load(url)
-					.placeholder(R.drawable.ic_book_black_24dp)
-					.error(R.drawable.ic_book_black_24dp)
-					.into(thumbnail);
+			Picasso.with(this).load(url).placeholder(R.drawable.ic_book_black_24dp).error(R.drawable.ic_book_black_24dp).into(thumbnail);
 		}
 	}
 	
@@ -64,6 +57,21 @@ public class DetailActivity extends AppCompatActivity {
 	private void bindAuthor() {
 		TextView author = findViewById(R.id.author_text_view);
 		author.setText(book.getAuthor());
+	}
+	
+	private void bindDescription() {
+		String bookDescription = book.getDescription();
+		if (TextUtils.isEmpty(bookDescription)) {
+			showErrorTextView();
+		} else {
+			TextView description = findViewById(R.id.text_view_description);
+			description.setText(book.getDescription());
+		}
+	}
+	
+	private void showErrorTextView() {
+		TextView noDescription = findViewById(R.id.no_description_error);
+		noDescription.setVisibility(View.VISIBLE);
 	}
 	
 	

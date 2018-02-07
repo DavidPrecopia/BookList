@@ -22,7 +22,10 @@
 	<string name="image_view_error">image view error</string>
 	<string name="refresh">Refresh</string>
 	
+	<!--Set in NetworkUtils.ParseJson-->
 	<string name="no_book_author">No author listed</string>
 	<string name="no_book_title">No title listed</string>
+
 	<string name="details_button_more_info">More Info</string>
+	<string name="error_no_description">No description</string>
 </resources>

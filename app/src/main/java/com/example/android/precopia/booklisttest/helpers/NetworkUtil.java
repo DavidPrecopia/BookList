@@ -150,25 +150,26 @@ public class NetworkUtil {
 		
 		
 		private static Book extractBookInfo(JSONObject bookInfo) {
-			String title = "", authors = "", thumbnailUrl = "", bookInfoUrl = "";
+			String title = "", authors = "", thumbnailUrl = "", description = "", bookInfoUrl = "";
 			try {
 				title = getTitle(bookInfo);
 				authors = getAuthors(bookInfo);
 				thumbnailUrl = getThumbnailUrl(bookInfo);
+				description = getDescription(bookInfo);
 				bookInfoUrl = getBookInfoUrl(bookInfo);
 			} catch (JSONException e) {
 				Log.e(LOG_TAG, "extractBookInfo method", e);
 			}
-			return new Book(title, authors, thumbnailUrl, bookInfoUrl);
+			return new Book(title, authors, thumbnailUrl, description, bookInfoUrl);
 		}
 		
 		private static String getTitle(JSONObject bookInfo) throws JSONException {
-			return bookInfo.isNull("title") ? "" : bookInfo.getString("title");
+			return bookInfo.isNull("title") ? "No title listed" : bookInfo.getString("title");
 		}
 		
 		@NonNull
 		private static String getAuthors(JSONObject bookInfo) throws JSONException {
-			return bookInfo.isNull("authors") ? "" : getAuthors(bookInfo.getJSONArray("authors"));
+			return bookInfo.isNull("authors") ? "No authors listed" : getAuthors(bookInfo.getJSONArray("authors"));
 		}
 		
 		private static String getAuthors(JSONArray jsonAuthorsArray) throws JSONException {
@@ -189,6 +190,10 @@ public class NetworkUtil {
 		
 		private static String getThumbnailUrl(JSONObject bookInfo) throws JSONException {
 			return bookInfo.isNull("imageLinks") ? "" : bookInfo.optJSONObject("imageLinks").getString("thumbnail");
+		}
+		
+		private static String getDescription(JSONObject bookInfo) throws JSONException {
+			return bookInfo.isNull("description") ? "" : bookInfo.getString("description");
 		}
 		
 		private static String getBookInfoUrl(JSONObject bookInfo) {

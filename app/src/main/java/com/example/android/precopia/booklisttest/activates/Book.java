@@ -4,17 +4,20 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Book implements Parcelable {
+	
+	private static final String LOG_TAG = Book.class.getSimpleName();
+	
 	private String title;
 	private String author;
 	private String thumbnailUrl;
-	private StringBuilder description;
+	private String description;
 	private String bookInfoUrl;
 	
 	public Book(String title, String author, String thumbnailUrl, String description, String bookInfoUrl) {
 		this.title = title;
 		this.author = author;
 		this.thumbnailUrl = thumbnailUrl;
-		this.description = new StringBuilder(description);
+		this.description = description;
 		this.bookInfoUrl = bookInfoUrl;
 	}
 	
@@ -31,13 +34,14 @@ public class Book implements Parcelable {
 		return thumbnailUrl;
 	}
 	
-	StringBuilder getDescription() {
+	String getDescription() {
 		return description;
 	}
 	
 	String getBookInfoUrl() {
 		return bookInfoUrl;
 	}
+	
 	
 	/**
 	 * Comments from Stack Overflow
@@ -48,6 +52,7 @@ public class Book implements Parcelable {
 		title = in.readString();
 		author = in.readString();
 		thumbnailUrl = in.readString();
+		description = in.readString();
 		bookInfoUrl = in.readString();
 	}
 	
@@ -82,6 +87,7 @@ public class Book implements Parcelable {
 		dest.writeString(title);
 		dest.writeString(author);
 		dest.writeString(thumbnailUrl);
+		dest.writeString(description);
 		dest.writeString(bookInfoUrl);
 	}
 }
