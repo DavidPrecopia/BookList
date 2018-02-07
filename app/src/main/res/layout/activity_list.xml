@@ -6,7 +6,7 @@
 	android:orientation="vertical">
 	
 	<ProgressBar
-		android:id="@+id/progress_bar"
+		android:id="@+id/progress_bar_list_activity"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_centerInParent="true" />
@@ -18,10 +18,8 @@
 		android:orientation="vertical" />
 	
 	
-	<!--used for errors-->
-	
 	<ImageView
-		android:id="@+id/image_view_error"
+		android:id="@+id/list_error_image_view"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_centerInParent="true"
@@ -29,10 +27,10 @@
 		android:visibility="gone" />
 	
 	<TextView
-		android:id="@+id/text_view_error"
+		android:id="@+id/list_error_text_view"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_below="@id/image_view_error"
+		android:layout_below="@id/list_error_image_view"
 		android:layout_centerHorizontal="true"
 		android:layout_marginTop="@dimen/standard_margin"
 		android:textAppearance="?android:textAppearanceMedium"

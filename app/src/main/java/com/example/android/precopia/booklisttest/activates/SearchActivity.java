@@ -78,7 +78,7 @@ public class SearchActivity extends AppCompatActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-			case R.id.settings_item:
+			case R.id.settings_menu_item:
 				startActivity(new Intent(this, SettingsActivity.class));
 				return true;
 			default:

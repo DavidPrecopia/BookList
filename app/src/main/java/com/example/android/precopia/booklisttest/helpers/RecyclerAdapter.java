@@ -73,7 +73,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BookHo
 			super(itemView);
 			itemView.setOnClickListener(this);
 			thumbnailImageView = itemView.findViewById(R.id.book_thumbnail_image);
-			titleTextView = itemView.findViewById(R.id.text_view_title);
+			titleTextView = itemView.findViewById(R.id.title_text_view);
 			authorTextView = itemView.findViewById(R.id.author_text_view);
 			this.parent = parent;
 		}

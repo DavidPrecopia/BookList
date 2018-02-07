@@ -50,9 +50,9 @@ public class ListActivity extends AppCompatActivity implements LoaderManager.Loa
 		recyclerView = findViewById(R.id.recycler_view_layout);
 		recyclerAdapter = new RecyclerAdapter(new ArrayList<Book>(), this);
 		
-		progressBar = findViewById(R.id.progress_bar);
-		imageViewError = findViewById(R.id.image_view_error);
-		textViewError = findViewById(R.id.text_view_error);
+		progressBar = findViewById(R.id.progress_bar_list_activity);
+		imageViewError = findViewById(R.id.list_error_image_view);
+		textViewError = findViewById(R.id.list_error_text_view);
 		
 		setUpRecyclerView();
 		
@@ -66,7 +66,7 @@ public class ListActivity extends AppCompatActivity implements LoaderManager.Loa
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
 		if (connectedToInternet) {
-			MenuItem menuItem = menu.findItem(R.id.menu_item_refresh);
+			MenuItem menuItem = menu.findItem(R.id.refresh_menu_item);
 			menuItem.setVisible(false);
 		}
 		return true;
@@ -74,15 +74,16 @@ public class ListActivity extends AppCompatActivity implements LoaderManager.Loa
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.book_activity_menu, menu);
+		getMenuInflater().inflate(R.menu.list_activity_menu, menu);
 		return true;
 	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-			case R.id.menu_item_refresh:
+			case R.id.refresh_menu_item:
 				retryConnection();
+				return true;
 			default:
 				return super.onOptionsItemSelected(item);
 		}

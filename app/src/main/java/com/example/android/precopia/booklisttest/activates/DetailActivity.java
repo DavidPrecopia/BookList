@@ -3,8 +3,11 @@ package com.example.android.precopia.booklisttest.activates;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -32,6 +35,39 @@ public class DetailActivity extends AppCompatActivity {
 	}
 	
 	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.detail_activty_menu, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.share_menu_item:
+				shareBook();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	private void shareBook() {
+		String mimeType = "text/plain";
+		StringBuilder information = getBookInformation();
+		ShareCompat.IntentBuilder.from(this).setType(mimeType).setText(information).startChooser();
+	}
+	
+	private StringBuilder getBookInformation() {
+		return new StringBuilder()
+				.append(book.getTitle())
+				.append(" by ")
+				.append(book.getAuthor())
+				.append("\n")
+				.append(book.getBookInfoUrl());
+	}
+	
+	
 	private void bindData() {
 		bindImage();
 		bindTitle();
@@ -50,7 +86,7 @@ public class DetailActivity extends AppCompatActivity {
 	}
 	
 	private void bindTitle() {
-		TextView title = findViewById(R.id.text_view_title);
+		TextView title = findViewById(R.id.title_text_view);
 		title.setText(book.getTitle());
 	}
 	
@@ -64,7 +100,7 @@ public class DetailActivity extends AppCompatActivity {
 		if (TextUtils.isEmpty(bookDescription)) {
 			showErrorTextView();
 		} else {
-			TextView description = findViewById(R.id.text_view_description);
+			TextView description = findViewById(R.id.description_text_view);
 			description.setText(book.getDescription());
 		}
 	}
@@ -76,7 +112,7 @@ public class DetailActivity extends AppCompatActivity {
 	
 	
 	private void clickListener() {
-		Button button = findViewById(R.id.button_more_info);
+		Button button = findViewById(R.id.more_info_button);
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

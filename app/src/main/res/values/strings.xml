@@ -20,7 +20,8 @@
 	<string name="error_no_books_found">No books found</string>
 	<string name="error_no_book_info_url">No link available</string>
 	<string name="image_view_error">image view error</string>
-	<string name="refresh">Refresh</string>
+
+	<string name="refresh_menu_title">Refresh</string>
 	
 	<!--Set in NetworkUtils.ParseJson-->
 	<string name="no_book_author">No author listed</string>
@@ -28,4 +29,5 @@
 
 	<string name="details_button_more_info">More Info</string>
 	<string name="error_no_description">No description</string>
+	<string name="share_menu_title">Share</string>
 </resources>
