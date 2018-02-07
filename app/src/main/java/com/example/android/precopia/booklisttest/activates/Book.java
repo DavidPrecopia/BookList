@@ -38,9 +38,8 @@ public class Book implements Parcelable {
 	 * Comments from Stack Overflow
 	 * https://stackoverflow.com/questions/2139134/how-to-send-an-object-from-one-android-activity-to-another-using-intents
 	 */
-	// TODO keep protected?
 	// example constructor that takes a Parcel and gives you an object populated with it's values
-	protected Book(Parcel in) {
+	private Book(Parcel in) {
 		title = in.readString();
 		author = in.readString();
 		thumbnailUrl = in.readString();

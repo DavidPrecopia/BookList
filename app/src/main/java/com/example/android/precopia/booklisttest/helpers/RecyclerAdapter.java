@@ -74,7 +74,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BookHo
 			super(itemView);
 			itemView.setOnClickListener(this);
 			thumbnailImageView = itemView.findViewById(R.id.book_thumbnail_image);
-			titleTextView = itemView.findViewById(R.id.title_text_view);
+			titleTextView = itemView.findViewById(R.id.text_view_title);
 			authorTextView = itemView.findViewById(R.id.author_text_view);
 			this.parent = parent;
 		}
@@ -87,18 +87,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BookHo
 			bindAuthor();
 		}
 		
-		private void bindTitle() {
-			String titleFromBook = book.getTitle();
-			String titleString = TextUtils.isEmpty(titleFromBook) ? parent.getContext().getString(R.string.no_book_title) : titleFromBook;
-			titleTextView.setText(titleString);
-		}
-		
-		private void bindAuthor() {
-			String authorFromBook = book.getAuthor();
-			String authorString = TextUtils.isEmpty(authorFromBook) ? parent.getContext().getString(R.string.no_book_author) : authorFromBook;
-			authorTextView.setText(authorString);
-		}
-		
 		private void bindThumbnail(String url) {
 			if (TextUtils.isEmpty(url)) {
 				thumbnailImageView.setImageResource(R.drawable.ic_book_black_24dp);
@@ -109,6 +97,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BookHo
 						.error(R.drawable.ic_book_black_24dp)
 						.into(thumbnailImageView);
 			}
+		}
+		
+		private void bindTitle() {
+			String titleFromBook = book.getTitle();
+			String titleString = TextUtils.isEmpty(titleFromBook) ? parent.getContext().getString(R.string.no_book_title) : titleFromBook;
+			titleTextView.setText(titleString);
+		}
+		
+		private void bindAuthor() {
+			String authorFromBook = book.getAuthor();
+			String authorString = TextUtils.isEmpty(authorFromBook) ? parent.getContext().getString(R.string.no_book_author) : authorFromBook;
+			authorTextView.setText(authorString);
 		}
 		
 		
