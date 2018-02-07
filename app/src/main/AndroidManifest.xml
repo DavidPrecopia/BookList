@@ -12,7 +12,7 @@
 		android:roundIcon="@mipmap/ic_launcher_round"
 		android:supportsRtl="true"
 		android:theme="@style/AppTheme">
-		<activity android:name=".activites.SearchActivity">
+		<activity android:name=".activates.SearchActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				
@@ -20,14 +20,18 @@
 			</intent-filter>
 		</activity>
 		<activity
-			android:name=".activites.SettingsActivity"
+			android:name=".activates.SettingsActivity"
 			android:label="@string/settings_name"
-			android:parentActivityName=".activites.SearchActivity" />
+			android:parentActivityName=".activates.SearchActivity" />
+		
 		<activity
-			android:name=".activites.ListActivity"
-			android:label="@string/book_list_activity_label"
-			android:parentActivityName=".activites.SearchActivity" />
-		<activity android:name=".activites.DetailActivity"></activity>
+			android:name=".activates.ListActivity"
+			android:label="@string/list_activity_label"
+			android:parentActivityName=".activates.SearchActivity" />
+		
+		<activity android:name=".activates.DetailActivity"
+			android:label="@string/detail_activity_label"
+			android:parentActivityName=".activates.ListActivity"/>
 	</application>
 
 </manifest>

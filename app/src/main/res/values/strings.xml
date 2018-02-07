@@ -1,6 +1,7 @@
 <resources>
 	<string name="app_name">Book List Test</string>
-	<string name="book_list_activity_label">List of Books</string>
+	<string name="list_activity_label">Search Results</string>
+	<string name="detail_activity_label">Details</string>
 	
 	<string name="general_edit_text">General term</string>
 	<string name="title_edit_text">Title</string>
@@ -20,4 +21,7 @@
 	<string name="error_no_book_info_url">No link available</string>
 	<string name="image_view_error">image view error</string>
 	<string name="refresh">Refresh</string>
+	
+	<string name="no_book_author">No author listed</string>
+	<string name="no_book_title">No title listed</string>
 </resources>

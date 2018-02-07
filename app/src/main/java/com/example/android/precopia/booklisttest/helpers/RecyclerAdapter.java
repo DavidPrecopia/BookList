@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.precopia.booklisttest.R;
-import com.example.android.precopia.booklisttest.activites.Book;
+import com.example.android.precopia.booklisttest.activates.Book;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import java.util.List;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BookHolder> {
 	
 	public interface ItemClickListener {
-		void onClick(String bookInfoUrl);
+		void onClick(Book book);
 	}
 	
 	private ItemClickListener itemClickListener;
@@ -68,7 +68,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BookHo
 		
 		/**
 		 * @param itemView The list item view
-		 * @param parent Picasso needs context to set a thumbnailImageView
+		 * @param parent to provide context
 		 */
 		BookHolder(View itemView, ViewGroup parent) {
 			super(itemView);
@@ -89,13 +89,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BookHo
 		
 		private void bindTitle() {
 			String titleFromBook = book.getTitle();
-			String titleString = TextUtils.isEmpty(titleFromBook) ? "No title listed" : titleFromBook;
+			String titleString = TextUtils.isEmpty(titleFromBook) ? parent.getContext().getString(R.string.no_book_title) : titleFromBook;
 			titleTextView.setText(titleString);
 		}
 		
 		private void bindAuthor() {
 			String authorFromBook = book.getAuthor();
-			String authorString = TextUtils.isEmpty(authorFromBook) ? "No author listed" : authorFromBook;
+			String authorString = TextUtils.isEmpty(authorFromBook) ? parent.getContext().getString(R.string.no_book_author) : authorFromBook;
 			authorTextView.setText(authorString);
 		}
 		
@@ -114,7 +114,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BookHo
 		
 		@Override
 		public void onClick(View v) {
-			itemClickListener.onClick(this.book.getBookInfoUrl());
+			itemClickListener.onClick(this.book);
 		}
 	}
 }

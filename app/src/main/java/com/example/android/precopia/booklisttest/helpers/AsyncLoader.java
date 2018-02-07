@@ -3,7 +3,7 @@ package com.example.android.precopia.booklisttest.helpers;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 
-import com.example.android.precopia.booklisttest.activites.Book;
+import com.example.android.precopia.booklisttest.activates.Book;
 
 import java.util.List;
 

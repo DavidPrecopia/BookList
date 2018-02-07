@@ -1,10 +1,9 @@
-package com.example.android.precopia.booklisttest.activites;
+package com.example.android.precopia.booklisttest.activates;
 
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -13,14 +12,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.android.precopia.booklisttest.R;
 import com.example.android.precopia.booklisttest.helpers.AsyncLoader;
@@ -184,18 +181,9 @@ public class ListActivity extends AppCompatActivity implements LoaderManager.Loa
 	 * Implements single method from RecyclerAdapter.ItemClickListener interface
 	 */
 	@Override
-	public void onClick(String bookInfoUrl) {
-		if (TextUtils.isEmpty(bookInfoUrl)) {
-			Toast.makeText(this, R.string.error_no_book_info_url, Toast.LENGTH_SHORT).show();
-		} else {
-			openWebBrowser(bookInfoUrl);
-		}
-	}
-	
-	private void openWebBrowser(String bookInfoUrl) {
-		Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(bookInfoUrl));
-		if (intent.resolveActivity(getPackageManager()) != null) {
-			startActivity(intent);
-		}
+	public void onClick(Book book) {
+		Intent intent = new Intent(this, DetailActivity.class);
+		intent.putExtra(DetailActivity.class.getSimpleName(), book);
+		startActivity(intent);
 	}
 }

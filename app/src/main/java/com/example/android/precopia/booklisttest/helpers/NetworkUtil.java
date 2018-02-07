@@ -6,7 +6,7 @@ import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.example.android.precopia.booklisttest.activites.Book;
+import com.example.android.precopia.booklisttest.activates.Book;
 
 import org.json.JSONArray;
 import org.json.JSONException;

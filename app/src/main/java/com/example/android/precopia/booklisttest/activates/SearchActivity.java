@@ -1,4 +1,4 @@
-package com.example.android.precopia.booklisttest.activites;
+package com.example.android.precopia.booklisttest.activates;
 
 import android.content.Intent;
 import android.os.Bundle;
