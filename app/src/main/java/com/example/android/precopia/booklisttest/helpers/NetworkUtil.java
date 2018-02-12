@@ -42,7 +42,7 @@ public class NetworkUtil {
 	}
 	
 	
-	public static List<Book> fetchBookInformation(String requestUrl) {
+	static List<Book> fetchBookInformation(String requestUrl) {
 		String jsonResponse = "";
 		try {
 			jsonResponse = httpRequest(createUrl(requestUrl));
@@ -132,6 +132,7 @@ public class NetworkUtil {
 	
 	private static class ParseJson {
 		private static List<Book> parseJsonResponse(String jsonResponse) {
+			Log.i(LOG_TAG, "parseJsonResponse");
 			List<Book> bookList = new ArrayList<>();
 			try {
 				JSONArray jsonArrayOfBooks = new JSONObject(jsonResponse).optJSONArray("items");
