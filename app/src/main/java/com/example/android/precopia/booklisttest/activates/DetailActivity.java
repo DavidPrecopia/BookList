@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.android.precopia.booklisttest.R;
-import com.example.android.precopia.booklisttest.helpers.GlideApp;
 
 public class DetailActivity extends AppCompatActivity {
 	

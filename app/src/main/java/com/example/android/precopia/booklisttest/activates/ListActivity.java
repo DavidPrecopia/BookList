@@ -20,10 +20,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.android.precopia.booklisttest.R;
-import com.example.android.precopia.booklisttest.helpers.AsyncLoader;
-import com.example.android.precopia.booklisttest.helpers.NetworkUtil;
-import com.example.android.precopia.booklisttest.helpers.QueryUrlConcatenation;
-import com.example.android.precopia.booklisttest.helpers.RecyclerAdapter;
+import com.example.android.precopia.booklisttest.network.AsyncLoader;
+import com.example.android.precopia.booklisttest.network.NetworkUtil;
+import com.example.android.precopia.booklisttest.network.QueryUrlConcatenation;
 
 import java.util.ArrayList;
 import java.util.List;

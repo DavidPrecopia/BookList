@@ -1,4 +1,4 @@
-package com.example.android.precopia.booklisttest.helpers;
+package com.example.android.precopia.booklisttest.activates;
 
 import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.module.AppGlideModule;

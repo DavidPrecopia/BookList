@@ -1,4 +1,4 @@
-package com.example.android.precopia.booklisttest.helpers;
+package com.example.android.precopia.booklisttest.network;
 
 import android.text.TextUtils;
 import android.util.Log;

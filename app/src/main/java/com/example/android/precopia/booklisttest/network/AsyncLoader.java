@@ -1,4 +1,4 @@
-package com.example.android.precopia.booklisttest.helpers;
+package com.example.android.precopia.booklisttest.network;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;

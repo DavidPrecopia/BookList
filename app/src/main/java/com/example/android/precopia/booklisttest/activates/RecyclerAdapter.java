@@ -1,4 +1,4 @@
-package com.example.android.precopia.booklisttest.helpers;
+package com.example.android.precopia.booklisttest.activates;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.android.precopia.booklisttest.R;
-import com.example.android.precopia.booklisttest.activates.Book;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BookHo
 	
 	private List<Book> bookList;
 	
-	public RecyclerAdapter(List<Book> bookList, ItemClickListener itemClickListener) {
+	RecyclerAdapter(List<Book> bookList, ItemClickListener itemClickListener) {
 		this.bookList = new ArrayList<>(bookList);
 		this.itemClickListener = itemClickListener;
 	}
