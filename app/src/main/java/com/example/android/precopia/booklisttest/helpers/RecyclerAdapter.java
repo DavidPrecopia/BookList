@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.android.precopia.booklisttest.R;
 import com.example.android.precopia.booklisttest.activates.Book;
 
@@ -88,7 +89,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BookHo
 		}
 		
 		private void bindThumbnail(String url) {
-			GlideApp.with(parent.getContext()).load(url).placeholder(R.drawable.ic_book_black_24dp).into(thumbnailImageView);
+			GlideApp.with(parent.getContext()).load(url)
+					.placeholder(R.drawable.ic_book_black_24dp)
+					.transition(DrawableTransitionOptions.withCrossFade())
+					.into(thumbnailImageView);
 		}
 		
 		

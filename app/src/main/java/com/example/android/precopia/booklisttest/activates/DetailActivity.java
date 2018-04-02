@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.android.precopia.booklisttest.R;
 import com.example.android.precopia.booklisttest.helpers.GlideApp;
 
@@ -78,7 +79,11 @@ public class DetailActivity extends AppCompatActivity {
 	private void bindImage() {
 		ImageView thumbnail = findViewById(R.id.book_thumbnail_image);
 		String url = book.getThumbnailUrl();
-		GlideApp.with(this).load(url).placeholder(R.drawable.ic_book_black_24dp).into(thumbnail);
+		GlideApp.with(this)
+				.load(url)
+				.placeholder(R.drawable.ic_book_black_24dp)
+				.transition(DrawableTransitionOptions.withCrossFade())
+				.into(thumbnail);
 	}
 	
 	private void bindTitle() {
