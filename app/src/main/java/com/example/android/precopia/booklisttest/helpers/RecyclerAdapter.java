@@ -90,7 +90,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BookHo
 		
 		private void bindThumbnail(String url) {
 			GlideApp.with(parent.getContext()).load(url)
-					.placeholder(R.drawable.ic_book_black_24dp)
+					.placeholder(R.drawable.ic_book_24dp)
 					.transition(DrawableTransitionOptions.withCrossFade())
 					.into(thumbnailImageView);
 		}

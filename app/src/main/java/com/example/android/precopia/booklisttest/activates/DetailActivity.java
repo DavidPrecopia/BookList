@@ -81,7 +81,7 @@ public class DetailActivity extends AppCompatActivity {
 		String url = book.getThumbnailUrl();
 		GlideApp.with(this)
 				.load(url)
-				.placeholder(R.drawable.ic_book_black_24dp)
+				.placeholder(R.drawable.ic_book_24dp)
 				.transition(DrawableTransitionOptions.withCrossFade())
 				.into(thumbnail);
 	}

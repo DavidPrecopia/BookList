@@ -129,7 +129,7 @@ public class ListActivity extends AppCompatActivity implements LoaderManager.Loa
 		progressBar.setVisibility(View.GONE);
 		imageViewError.setVisibility(View.VISIBLE);
 		textViewError.setVisibility(View.VISIBLE);
-		imageViewError.setImageResource(R.drawable.ic_signal_wifi_off_black_48dp);
+		imageViewError.setImageResource(R.drawable.ic_signal_wifi_off_48dp);
 		textViewError.setText(R.string.error_no_connection);
 	}
 	
@@ -168,7 +168,7 @@ public class ListActivity extends AppCompatActivity implements LoaderManager.Loa
 	private void displayNoResultsError() {
 		imageViewError.setVisibility(View.VISIBLE);
 		textViewError.setVisibility(View.VISIBLE);
-		imageViewError.setImageResource(R.drawable.ic_error_outline_black_48dp);
+		imageViewError.setImageResource(R.drawable.ic_error_outline_48dp);
 		textViewError.setText(R.string.error_no_books_found);
 	}
 	
