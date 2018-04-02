@@ -1,7 +1,7 @@
 package com.example.android.precopia.booklisttest.helpers;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.example.android.precopia.booklisttest.R;
 import com.example.android.precopia.booklisttest.activates.Book;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,14 +30,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BookHo
 	}
 	
 	
+	@NonNull
 	@Override
-	public BookHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+	public BookHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
 		return new BookHolder(view, parent);
 	}
 	
 	@Override
-	public void onBindViewHolder(BookHolder holder, int position) {
+	public void onBindViewHolder(@NonNull BookHolder holder, int position) {
 		holder.bindData(position);
 	}
 	
@@ -88,11 +88,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BookHo
 		}
 		
 		private void bindThumbnail(String url) {
-			if (TextUtils.isEmpty(url)) {
-				thumbnailImageView.setImageResource(R.drawable.ic_book_black_24dp);
-			} else {
-				Picasso.with(parent.getContext()).load(url).placeholder(R.drawable.ic_book_black_24dp).error(R.drawable.ic_book_black_24dp).into(thumbnailImageView);
-			}
+			GlideApp.with(parent.getContext()).load(url).placeholder(R.drawable.ic_book_black_24dp).into(thumbnailImageView);
 		}
 		
 		

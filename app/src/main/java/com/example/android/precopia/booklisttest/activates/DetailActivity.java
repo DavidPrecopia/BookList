@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.precopia.booklisttest.R;
-import com.squareup.picasso.Picasso;
+import com.example.android.precopia.booklisttest.helpers.GlideApp;
 
 public class DetailActivity extends AppCompatActivity {
 	
@@ -78,11 +78,7 @@ public class DetailActivity extends AppCompatActivity {
 	private void bindImage() {
 		ImageView thumbnail = findViewById(R.id.book_thumbnail_image);
 		String url = book.getThumbnailUrl();
-		if (TextUtils.isEmpty(url)) {
-			thumbnail.setImageResource(R.drawable.ic_book_black_24dp);
-		} else {
-			Picasso.with(this).load(url).placeholder(R.drawable.ic_book_black_24dp).error(R.drawable.ic_book_black_24dp).into(thumbnail);
-		}
+		GlideApp.with(this).load(url).placeholder(R.drawable.ic_book_black_24dp).into(thumbnail);
 	}
 	
 	private void bindTitle() {
