@@ -32,7 +32,7 @@ final class ParseJson {
 				bookList.add(extractBookInfo(bookInfo));
 			}
 		} catch (JSONException e) {
-			Log.e(LOG_TAG, "parseJsonResponse method", e);
+			Log.e(LOG_TAG, "Error parsing JSON response", e);
 		}
 		return bookList;
 	}
@@ -47,7 +47,7 @@ final class ParseJson {
 			description = getDescription(bookInfo);
 			bookInfoUrl = getBookInfoUrl(bookInfo);
 		} catch (JSONException e) {
-			Log.e(LOG_TAG, "extractBookInfo method", e);
+			Log.e(LOG_TAG, "Error extracting book information", e);
 		}
 		return new Book(title, authors, thumbnailUrl, description, bookInfoUrl);
 	}
@@ -72,7 +72,7 @@ final class ParseJson {
 				authorsString.append(jsonAuthorsArray.get(0).toString());
 			}
 		} catch (JSONException e) {
-			Log.e(LOG_TAG, "getAuthors", e);
+			Log.e(LOG_TAG, "Error extracting author(s)", e);
 		}
 		return authorsString.toString();
 	}
@@ -88,5 +88,4 @@ final class ParseJson {
 	private static String getBookInfoUrl(JSONObject bookInfo) {
 		return bookInfo.isNull("infoLink") ? "" : bookInfo.optString("infoLink");
 	}
-	
 }
