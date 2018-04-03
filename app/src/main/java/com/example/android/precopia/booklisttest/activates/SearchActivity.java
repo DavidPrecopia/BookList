@@ -37,17 +37,13 @@ public class SearchActivity extends AppCompatActivity {
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				evaluateUserInput();
+				if (allTextFieldsAreEmpty()) {
+					toastEmptyFields();
+				} else {
+					intentSwitchActivity();
+				}
 			}
 		});
-	}
-	
-	private void evaluateUserInput() {
-		if (allTextFieldsAreEmpty()) {
-			toastEmptyFields();
-		} else {
-			intentSwitchActivity();
-		}
 	}
 	
 	private void toastEmptyFields() {

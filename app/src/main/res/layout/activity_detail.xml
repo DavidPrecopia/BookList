@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:layout_margin="@dimen/standard_margin"
+	android:layout_margin="@dimen/normal_margin"
 	android:orientation="vertical">
 	
 	<include
@@ -14,7 +14,7 @@
 		android:layout_height="wrap_content"
 		android:layout_above="@id/more_info_button"
 		android:layout_below="@id/included_layout"
-		android:layout_marginTop="@dimen/standard_margin">
+		android:layout_marginTop="@dimen/normal_margin">
 		
 		<TextView
 			android:id="@+id/description_text_view"
@@ -38,7 +38,7 @@
 		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"
 		android:layout_centerHorizontal="true"
-		android:layout_marginTop="@dimen/standard_margin"
+		android:layout_marginTop="@dimen/normal_margin"
 		android:text="@string/details_button_more_info" />
 
 </RelativeLayout>

@@ -14,7 +14,10 @@ public class AsyncLoader extends AsyncTaskLoader<List<Book>> {
 	
 	private String url;
 	
-	private List<Book> cacheOfResults = new ArrayList<>();
+	private List<Book> cacheOfResults;
+	{
+		cacheOfResults = new ArrayList<>();
+	}
 	
 	public AsyncLoader(Context context, String url) {
 		super(context);

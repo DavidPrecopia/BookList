@@ -58,6 +58,7 @@ public class NetworkUtil {
 		return url;
 	}
 	
+	
 	/*
 	Not sure how to break up
 	 */

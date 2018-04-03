@@ -53,9 +53,11 @@ public class DetailActivity extends AppCompatActivity {
 	}
 	
 	private void shareBook() {
-		String mimeType = "text/plain";
-		StringBuilder information = getBookInformation();
-		ShareCompat.IntentBuilder.from(this).setType(mimeType).setText(information).startChooser();
+		ShareCompat.IntentBuilder
+				.from(this)
+				.setType("text/plain")
+				.setText(getBookInformation())
+				.startChooser();
 	}
 	
 	private StringBuilder getBookInformation() {
@@ -77,9 +79,8 @@ public class DetailActivity extends AppCompatActivity {
 	
 	private void bindImage() {
 		ImageView thumbnail = findViewById(R.id.book_thumbnail_image);
-		String url = book.getThumbnailUrl();
 		GlideApp.with(this)
-				.load(url)
+				.load(book.getThumbnailUrl())
 				.placeholder(R.drawable.ic_book_24dp)
 				.transition(DrawableTransitionOptions.withCrossFade())
 				.into(thumbnail);
@@ -98,14 +99,14 @@ public class DetailActivity extends AppCompatActivity {
 	private void bindDescription() {
 		String bookDescription = book.getDescription();
 		if (TextUtils.isEmpty(bookDescription)) {
-			showErrorTextView();
+			showNoDescriptionError();
 		} else {
 			TextView description = findViewById(R.id.description_text_view);
 			description.setText(book.getDescription());
 		}
 	}
 	
-	private void showErrorTextView() {
+	private void showNoDescriptionError() {
 		TextView noDescription = findViewById(R.id.no_description_error);
 		noDescription.setVisibility(View.VISIBLE);
 	}

@@ -1,7 +1,12 @@
 package com.example.android.precopia.booklisttest.activates;
 
+import android.databinding.BindingAdapter;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.widget.ImageView;
+
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.example.android.precopia.booklisttest.R;
 
 public class Book implements Parcelable {
 	
@@ -22,16 +27,16 @@ public class Book implements Parcelable {
 	}
 	
 	
+	public String getThumbnailUrl() {
+		return thumbnailUrl;
+	}
+	
 	public String getTitle() {
 		return title;
 	}
 	
 	public String getAuthor() {
 		return author;
-	}
-	
-	public String getThumbnailUrl() {
-		return thumbnailUrl;
 	}
 	
 	String getDescription() {
@@ -43,11 +48,20 @@ public class Book implements Parcelable {
 	}
 	
 	
+	@BindingAdapter({"app:srcCompat"})
+	public static void bindThumbnail(ImageView view, String url) {
+		GlideApp.with(view.getContext()).load(url)
+				.placeholder(R.drawable.ic_book_24dp)
+				.transition(DrawableTransitionOptions.withCrossFade())
+				.into(view);
+	}
+	
+	
 	/**
 	 * Comments from Stack Overflow
 	 * https://stackoverflow.com/questions/2139134/how-to-send-an-object-from-one-android-activity-to-another-using-intents
 	 */
-	// example constructor that takes a Parcel and gives you an object populated with it's values
+	// Example constructor that takes a Parcel and gives you an object populated with it's values
 	private Book(Parcel in) {
 		title = in.readString();
 		author = in.readString();
@@ -56,7 +70,8 @@ public class Book implements Parcelable {
 		bookInfoUrl = in.readString();
 	}
 	
-	// this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
+	// This is used to regenerate your object.
+	// All Parcelables must have a CREATOR that implements these two methods
 	public static final Creator<Book> CREATOR = new Creator<Book>() {
 		@Override
 		public Book createFromParcel(Parcel in) {
@@ -70,7 +85,7 @@ public class Book implements Parcelable {
 	};
 	
 	/**
-	 * 99.9% of the time you can just ignore this
+	 * (Stack Overflow) 99.9% of the time you can just ignore this
 	 * (Android Doc) Describe the kinds of special objects contained in this Parcelable instance's marshaled representation.
 	 */
 	@Override
@@ -79,7 +94,7 @@ public class Book implements Parcelable {
 	}
 	
 	/**
-	 * write your object's data to the passed-in Parcel
+	 * (Stack Overflow) Write your object's data to the passed-in Parcel
 	 * (Android Doc) Flatten this object in to a Parcel.
 	 */
 	@Override

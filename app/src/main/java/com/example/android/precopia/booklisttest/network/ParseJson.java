@@ -21,7 +21,6 @@ final class ParseJson {
 	
 	
 	static List<Book> parseJsonResponse(String jsonResponse) {
-		Log.i(LOG_TAG, "parseJsonResponse");
 		List<Book> bookList = new ArrayList<>();
 		try {
 			JSONArray jsonArrayOfBooks = new JSONObject(jsonResponse).optJSONArray("items");
@@ -62,7 +61,7 @@ final class ParseJson {
 		return bookInfo.isNull("authors") ? "No authors listed" : getAuthors(bookInfo.getJSONArray("authors"));
 	}
 	
-	private static String getAuthors(JSONArray jsonAuthorsArray) throws JSONException {
+	private static String getAuthors(JSONArray jsonAuthorsArray) {
 		StringBuilder authorsString = new StringBuilder();
 		try {
 			for (int j = 0; j < jsonAuthorsArray.length(); j++) {

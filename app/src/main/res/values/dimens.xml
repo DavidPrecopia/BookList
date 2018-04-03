@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<dimen name="list_item_height">64dp</dimen>
-	<dimen name="standard_margin">16dp</dimen>
+	<dimen name="list_item_height">72dp</dimen>
+	<dimen name="normal_margin">16dp</dimen>
+	<dimen name="small_margin">8dp</dimen>
+	<dimen name="thumbnail_size">48dp</dimen>
 </resources>

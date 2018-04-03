@@ -30,4 +30,5 @@
 	<string name="details_button_more_info">More Info</string>
 	<string name="error_no_description">No description</string>
 	<string name="share_menu_title">Share</string>
+	<string name="thumbnail_description">Thumbnail of book</string>
 </resources>

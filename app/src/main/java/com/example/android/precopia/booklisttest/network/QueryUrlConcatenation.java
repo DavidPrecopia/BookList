@@ -7,6 +7,12 @@ public final class QueryUrlConcatenation {
 	
 	private static final String LOG_TAG = QueryUrlConcatenation.class.getSimpleName();
 	
+	/**
+	 * For reference, a complete URL:
+	 * https://www.googleapis.com/books/v1/volumes?q=narnia+inauthor:lewis&maxResults=20
+	 */
+	
+	
 	private static final StringBuilder BASE_URL = new StringBuilder(
 			"https://www.googleapis.com/books/v1/volumes?q="
 	);
