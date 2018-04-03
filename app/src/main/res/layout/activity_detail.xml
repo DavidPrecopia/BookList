@@ -1,44 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:layout_margin="@dimen/normal_margin"
-	android:orientation="vertical">
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
 	
-	<include
-		android:id="@+id/included_layout"
-		layout="@layout/list_item" />
-	
-	<ScrollView
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_above="@id/more_info_button"
-		android:layout_below="@id/included_layout"
-		android:layout_marginTop="@dimen/normal_margin">
+	<data>
 		
-		<TextView
-			android:id="@+id/description_text_view"
+		<variable
+			name="book"
+			type="com.example.android.precopia.booklisttest.activates.Book" />
+	</data>
+	
+	<android.support.constraint.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+		
+		<include
+			android:id="@+id/include"
+			layout="@layout/list_item"
+			app:book="@{book}"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+		
+		<ScrollView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:textAppearance="?android:textAppearanceMedium" />
-	</ScrollView>
+			android:layout_marginEnd="16dp"
+			android:layout_marginLeft="16dp"
+			android:layout_marginRight="16dp"
+			android:layout_marginStart="16dp"
+			android:layout_marginTop="8dp"
+			android:visibility="@{book.displayDescriptionText()}"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/include">
+			
+			<TextView
+				android:id="@+id/description_text_view"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@{book.description}"
+				android:textAppearance="?android:textAppearanceMedium" />
+		</ScrollView>
+		
+		<TextView
+			android:id="@+id/no_description_error"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/error_no_description"
+			android:textAppearance="?android:textAppearanceMedium"
+			android:visibility="@{book.displayNoDescriptionError()}"
+			app:layout_constraintBottom_toTopOf="@+id/more_info_button"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/include" />
+		
+		<Button
+			android:id="@+id/more_info_button"
+			android:layout_width="wrap_content"
+			android:layout_height="0dp"
+			android:layout_marginBottom="16dp"
+			android:text="@string/details_button_more_info"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent" />
 	
-	<TextView
-		android:id="@+id/no_description_error"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_centerInParent="true"
-		android:text="@string/error_no_description"
-		android:textAppearance="?android:textAppearanceMedium"
-		android:visibility="gone" />
-	
-	<Button
-		android:id="@+id/more_info_button"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_alignParentBottom="true"
-		android:layout_centerHorizontal="true"
-		android:layout_marginTop="@dimen/normal_margin"
-		android:text="@string/details_button_more_info" />
+	</android.support.constraint.ConstraintLayout>
 
-</RelativeLayout>
+</layout>

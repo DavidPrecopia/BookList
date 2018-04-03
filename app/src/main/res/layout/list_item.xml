@@ -1,47 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!--USED BY DETAIL ACTIVITY LAYOUT-->
-<!--INCLUDE TAG-->
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="@dimen/list_item_height"
-	android:layout_margin="4dp"
-	android:orientation="horizontal">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
 	
-	<ImageView
-		android:id="@+id/book_thumbnail_image"
-		android:layout_width="@dimen/list_item_height"
-		android:layout_height="@dimen/list_item_height"
-		android:layout_marginEnd="@dimen/normal_margin"
-		android:layout_marginRight="@dimen/normal_margin"
-		android:contentDescription="@string/content_description" />
+	<data>
+		
+		<variable
+			name="book"
+			type="com.example.android.precopia.booklisttest.activates.Book" />
+	</data>
 	
-	<LinearLayout
+	<android.support.constraint.ConstraintLayout
+		android:id="@+id/constraint_layout"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:orientation="vertical">
+		android:layout_height="wrap_content">
+		
+		<ImageView
+			android:id="@+id/imageView"
+			android:layout_width="@dimen/thumbnail_size"
+			android:layout_height="@dimen/thumbnail_size"
+			android:layout_marginBottom="8dp"
+			android:layout_marginEnd="16dp"
+			android:layout_marginLeft="16dp"
+			android:layout_marginRight="16dp"
+			android:layout_marginStart="16dp"
+			android:layout_marginTop="8dp"
+			android:contentDescription="@string/thumbnail_description"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toStartOf="@+id/guideline"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:srcCompat="@{book.thumbnailUrl}" />
+		
+		<android.support.constraint.Guideline
+			android:id="@+id/guideline"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			app:layout_constraintGuide_begin="72dp" />
 		
 		<TextView
-			android:id="@+id/title_text_view"
-			android:layout_width="match_parent"
+			android:id="@+id/book_title"
+			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:layout_weight="2"
+			android:layout_marginTop="8dp"
 			android:ellipsize="end"
 			android:maxLines="2"
+			android:minLines="2"
+			android:text="@{book.title}"
 			android:textAppearance="?android:textAppearanceMedium"
-			android:visibility="visible" />
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="@+id/guideline"
+			app:layout_constraintTop_toTopOf="parent" />
 		
 		<TextView
-			android:id="@+id/author_text_view"
-			android:layout_width="match_parent"
+			android:id="@+id/book_author"
+			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:layout_weight="1"
+			android:layout_marginBottom="8dp"
 			android:ellipsize="end"
-			android:gravity="start|bottom"
 			android:maxLines="1"
+			android:text="@{book.author}"
 			android:textAppearance="?android:textAppearanceSmall"
-			android:visibility="visible" />
-	</LinearLayout>
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="@+id/guideline"
+			app:layout_constraintTop_toBottomOf="@+id/book_title" />
+	
+	</android.support.constraint.ConstraintLayout>
 
-</LinearLayout>
+</layout>

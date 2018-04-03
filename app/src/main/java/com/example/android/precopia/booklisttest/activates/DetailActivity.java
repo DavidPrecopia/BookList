@@ -1,20 +1,18 @@
 package com.example.android.precopia.booklisttest.activates;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.android.precopia.booklisttest.R;
+import com.example.android.precopia.booklisttest.databinding.ActivityDetailBinding;
 
 public class DetailActivity extends AppCompatActivity {
 	
@@ -25,11 +23,11 @@ public class DetailActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_detail);
+//		setContentView(R.layout.activity_detail);
+		ActivityDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
 		
 		book = getIntent().getParcelableExtra(DetailActivity.class.getSimpleName());
-		
-		bindData();
+		binding.setBook(book);
 		
 		clickListener();
 	}
@@ -67,48 +65,6 @@ public class DetailActivity extends AppCompatActivity {
 				.append(book.getAuthor())
 				.append("\n")
 				.append(book.getBookInfoUrl());
-	}
-	
-	
-	private void bindData() {
-		bindImage();
-		bindTitle();
-		bindAuthor();
-		bindDescription();
-	}
-	
-	private void bindImage() {
-		ImageView thumbnail = findViewById(R.id.book_thumbnail_image);
-		GlideApp.with(this)
-				.load(book.getThumbnailUrl())
-				.placeholder(R.drawable.ic_book_24dp)
-				.transition(DrawableTransitionOptions.withCrossFade())
-				.into(thumbnail);
-	}
-	
-	private void bindTitle() {
-		TextView title = findViewById(R.id.title_text_view);
-		title.setText(book.getTitle());
-	}
-	
-	private void bindAuthor() {
-		TextView author = findViewById(R.id.author_text_view);
-		author.setText(book.getAuthor());
-	}
-	
-	private void bindDescription() {
-		String bookDescription = book.getDescription();
-		if (TextUtils.isEmpty(bookDescription)) {
-			showNoDescriptionError();
-		} else {
-			TextView description = findViewById(R.id.description_text_view);
-			description.setText(book.getDescription());
-		}
-	}
-	
-	private void showNoDescriptionError() {
-		TextView noDescription = findViewById(R.id.no_description_error);
-		noDescription.setVisibility(View.VISIBLE);
 	}
 	
 	

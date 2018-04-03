@@ -3,6 +3,8 @@ package com.example.android.precopia.booklisttest.activates;
 import android.databinding.BindingAdapter;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
@@ -39,7 +41,7 @@ public class Book implements Parcelable {
 		return author;
 	}
 	
-	String getDescription() {
+	public String getDescription() {
 		return description;
 	}
 	
@@ -48,13 +50,27 @@ public class Book implements Parcelable {
 	}
 	
 	
-	@BindingAdapter({"app:srcCompat"})
+	@BindingAdapter({"srcCompat"})
 	public static void bindThumbnail(ImageView view, String url) {
 		GlideApp.with(view.getContext()).load(url)
 				.placeholder(R.drawable.ic_book_24dp)
 				.transition(DrawableTransitionOptions.withCrossFade())
 				.into(view);
 	}
+	
+	
+	public int displayDescriptionText() {
+		return hasDescription() ? View.VISIBLE : View.GONE;
+	}
+	
+	public int displayNoDescriptionError() {
+		return hasDescription() ? View.GONE : View.VISIBLE;
+	}
+	
+	private boolean hasDescription() {
+		return !TextUtils.isEmpty(this.description);
+	}
+	
 	
 	
 	/**

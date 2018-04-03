@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.android.precopia.booklisttest.databinding.ListItemConstraintBinding;
+import com.example.android.precopia.booklisttest.databinding.ListItemBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BookHo
 	@Override
 	public BookHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 		return new BookHolder(
-				ListItemConstraintBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false)
+				ListItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false)
 		);
 	}
 	
@@ -55,11 +55,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.BookHo
 	
 	class BookHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 		
-		private ListItemConstraintBinding binding;
+		private ListItemBinding binding;
 		
 		private Book book;
 		
-		BookHolder(ListItemConstraintBinding binding) {
+		BookHolder(ListItemBinding binding) {
 			super(binding.getRoot());
 			this.binding = binding;
 			itemView.setOnClickListener(this);
