@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.android.precopia.booklisttest.R;
+import com.example.android.precopia.booklisttest.book.Book;
 import com.example.android.precopia.booklisttest.network.AsyncLoader;
 import com.example.android.precopia.booklisttest.network.NetworkUtil;
 import com.example.android.precopia.booklisttest.network.QueryUrlConcatenation;
@@ -27,11 +28,11 @@ import com.example.android.precopia.booklisttest.network.QueryUrlConcatenation;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Book>>, RecyclerAdapter.ItemClickListener {
+public class ListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Book>> {
 	
 	private static final String LOG_TAG = ListActivity.class.getSimpleName();
 	
-	static boolean connectedToInternet;
+	private static boolean connectedToInternet;
 	
 	private RecyclerView recyclerView;
 	private RecyclerAdapter recyclerAdapter;
@@ -128,6 +129,7 @@ public class ListActivity extends AppCompatActivity implements LoaderManager.Loa
 		progressBar.setVisibility(View.GONE);
 		imageViewError.setVisibility(View.VISIBLE);
 		textViewError.setVisibility(View.VISIBLE);
+		
 		imageViewError.setImageResource(R.drawable.ic_signal_wifi_off_48dp);
 		textViewError.setText(R.string.error_no_connection);
 	}
@@ -174,16 +176,5 @@ public class ListActivity extends AppCompatActivity implements LoaderManager.Loa
 	@Override
 	public void onLoaderReset(Loader<List<Book>> loader) {
 		recyclerAdapter.swapData(new ArrayList<Book>());
-	}
-	
-	
-	/**
-	 * Implements single method from RecyclerAdapter.ItemClickListener interface
-	 */
-	@Override
-	public void onClick(Book book) {
-		Intent intent = new Intent(this, DetailActivity.class);
-		intent.putExtra(DetailActivity.class.getSimpleName(), book);
-		startActivity(intent);
 	}
 }

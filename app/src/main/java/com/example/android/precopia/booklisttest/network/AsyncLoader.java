@@ -3,7 +3,7 @@ package com.example.android.precopia.booklisttest.network;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 
-import com.example.android.precopia.booklisttest.activates.Book;
+import com.example.android.precopia.booklisttest.book.Book;
 
 import java.util.ArrayList;
 import java.util.List;

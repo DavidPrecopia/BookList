@@ -6,7 +6,7 @@ import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.example.android.precopia.booklisttest.activates.Book;
+import com.example.android.precopia.booklisttest.book.Book;
 
 import java.io.BufferedReader;
 import java.io.IOException;

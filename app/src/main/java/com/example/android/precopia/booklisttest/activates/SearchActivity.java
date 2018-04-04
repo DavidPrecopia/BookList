@@ -18,7 +18,6 @@ public class SearchActivity extends AppCompatActivity {
 	private EditText generalEditText;
 	private EditText titleEditText;
 	private EditText authorEditText;
-	private Button button;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,40 +27,8 @@ public class SearchActivity extends AppCompatActivity {
 		generalEditText = findViewById(R.id.general_edit_text);
 		titleEditText = findViewById(R.id.title_edit_text);
 		authorEditText = findViewById(R.id.author_edit_text);
-		button = findViewById(R.id.book_search);
 		
 		searchButtonListener();
-	}
-	
-	private void searchButtonListener() {
-		button.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (allTextFieldsAreEmpty()) {
-					toastEmptyFields();
-				} else {
-					intentSwitchActivity();
-				}
-			}
-		});
-	}
-	
-	private void toastEmptyFields() {
-		Toast.makeText(this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
-	}
-	
-	private void intentSwitchActivity() {
-		Intent intent = new Intent(SearchActivity.this, ListActivity.class);
-		intent.putExtra(getString(R.string.general_edit_text), generalEditText.getText().toString());
-		intent.putExtra(getString(R.string.title_edit_text), titleEditText.getText().toString());
-		intent.putExtra(getString(R.string.author_edit_text), authorEditText.getText().toString());
-		startActivity(intent);
-	}
-	
-	private boolean allTextFieldsAreEmpty() {
-		return TextUtils.isEmpty(generalEditText.getText().toString())
-				&& TextUtils.isEmpty(titleEditText.getText().toString())
-				&& TextUtils.isEmpty(authorEditText.getText().toString());
 	}
 	
 	
@@ -80,5 +47,39 @@ public class SearchActivity extends AppCompatActivity {
 			default:
 				return super.onOptionsItemSelected(item);
 		}
+	}
+	
+	
+	private void searchButtonListener() {
+		Button button = findViewById(R.id.book_search);
+		button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (allTextFieldsAreEmpty()) {
+					toastEmptyFields();
+				} else {
+					intentSwitchActivity();
+				}
+			}
+		});
+	}
+	
+	private void toastEmptyFields() {
+		Toast.makeText(this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
+	}
+	
+	
+	private void intentSwitchActivity() {
+		Intent intent = new Intent(SearchActivity.this, ListActivity.class);
+		intent.putExtra(getString(R.string.general_edit_text), generalEditText.getText().toString());
+		intent.putExtra(getString(R.string.title_edit_text), titleEditText.getText().toString());
+		intent.putExtra(getString(R.string.author_edit_text), authorEditText.getText().toString());
+		startActivity(intent);
+	}
+	
+	private boolean allTextFieldsAreEmpty() {
+		return TextUtils.isEmpty(generalEditText.getText().toString())
+				&& TextUtils.isEmpty(titleEditText.getText().toString())
+				&& TextUtils.isEmpty(authorEditText.getText().toString());
 	}
 }

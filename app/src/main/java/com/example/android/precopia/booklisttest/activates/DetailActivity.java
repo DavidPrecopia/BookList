@@ -9,9 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 import com.example.android.precopia.booklisttest.R;
+import com.example.android.precopia.booklisttest.book.Book;
 import com.example.android.precopia.booklisttest.databinding.ActivityDetailBinding;
 
 public class DetailActivity extends AppCompatActivity {
@@ -23,13 +23,12 @@ public class DetailActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		setContentView(R.layout.activity_detail);
 		ActivityDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
+		
+		binding.moreInfoButton.setOnClickListener(clickListener());
 		
 		book = getIntent().getParcelableExtra(DetailActivity.class.getSimpleName());
 		binding.setBook(book);
-		
-		clickListener();
 	}
 	
 	
@@ -50,6 +49,7 @@ public class DetailActivity extends AppCompatActivity {
 		}
 	}
 	
+	
 	private void shareBook() {
 		ShareCompat.IntentBuilder
 				.from(this)
@@ -68,14 +68,13 @@ public class DetailActivity extends AppCompatActivity {
 	}
 	
 	
-	private void clickListener() {
-		Button button = findViewById(R.id.more_info_button);
-		button.setOnClickListener(new View.OnClickListener() {
+	private View.OnClickListener clickListener() {
+		return new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				openWebBrowser();
 			}
-		});
+		};
 	}
 	
 	private void openWebBrowser() {

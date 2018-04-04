@@ -3,7 +3,7 @@ package com.example.android.precopia.booklisttest.network;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.example.android.precopia.booklisttest.activates.Book;
+import com.example.android.precopia.booklisttest.book.Book;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -6,13 +6,19 @@
 		
 		<variable
 			name="book"
-			type="com.example.android.precopia.booklisttest.activates.Book" />
+			type="com.example.android.precopia.booklisttest.book.Book" />
+		
+		<variable
+			name="eventHandler"
+			type="com.example.android.precopia.booklisttest.activates.EventHandlerListActivity" />
+		
 	</data>
 	
 	<android.support.constraint.ConstraintLayout
 		android:id="@+id/constraint_layout"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="wrap_content"
+		android:onClick="@{() -> eventHandler.onClick(book)}" >
 		
 		<ImageView
 			android:id="@+id/imageView"

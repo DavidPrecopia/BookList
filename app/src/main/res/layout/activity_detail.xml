@@ -7,7 +7,9 @@
 		
 		<variable
 			name="book"
-			type="com.example.android.precopia.booklisttest.activates.Book" />
+			type="com.example.android.precopia.booklisttest.book.Book" />
+		
+		<import type="android.view.View" />
 	</data>
 	
 	<android.support.constraint.ConstraintLayout
@@ -30,7 +32,7 @@
 			android:layout_marginRight="16dp"
 			android:layout_marginStart="16dp"
 			android:layout_marginTop="8dp"
-			android:visibility="@{book.displayDescriptionText()}"
+			android:visibility="@{book.hasDescription() ? View.VISIBLE : View.GONE}"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@+id/include">
@@ -49,7 +51,7 @@
 			android:layout_height="wrap_content"
 			android:text="@string/error_no_description"
 			android:textAppearance="?android:textAppearanceMedium"
-			android:visibility="@{book.displayNoDescriptionError()}"
+			android:visibility="@{book.hasDescription() ? View.GONE : View.VISIBLE}"
 			app:layout_constraintBottom_toTopOf="@+id/more_info_button"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
