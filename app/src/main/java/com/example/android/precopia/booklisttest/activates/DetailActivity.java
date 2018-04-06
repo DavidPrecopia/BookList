@@ -16,8 +16,6 @@ import com.example.android.precopia.booklisttest.databinding.ActivityDetailBindi
 
 public class DetailActivity extends AppCompatActivity {
 	
-	private static final String LOG_TAG = DetailActivity.class.getSimpleName();
-	
 	private Book book;
 	
 	@Override
