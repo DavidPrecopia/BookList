@@ -3,6 +3,7 @@
 	android:title="@string/settings_name">
 	
 	<ListPreference
+		android:background="?selectableItemBackground"
 		android:defaultValue="@string/settings_default_value"
 		android:entries="@array/max_results_values"
 		android:entryValues="@array/max_results_values"
