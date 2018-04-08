@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,12 +34,15 @@ import java.util.List;
 
 public class ListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Book>>, SwipeRefreshLayout.OnRefreshListener {
 	
+	private static final int LOADER_ID = 0;
+	
 	private String queryUrl;
 	
 	private RecyclerView recyclerView;
 	private RecyclerAdapter recyclerAdapter;
 	
 	private SwipeRefreshLayout swipeRefresh;
+	private Menu menu;
 	
 	private ProgressBar progressBar;
 	private ImageView imageViewError;
@@ -106,11 +110,14 @@ public class ListActivity extends AppCompatActivity implements LoaderManager.Loa
 	
 	/**
 	 * Only show the menu item if their is a network connection
+	 *
+	 * This is called post onCreateOptionsMenu(Menu menu)
 	 */
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
+		Log.d("LOG_TAG", "onPrepareOptionsMenu");
 		super.onPrepareOptionsMenu(menu);
-		if (NetworkUtil.haveConnection(this)) {
+		if (NetworkUtil.haveConnection(getApplicationContext())) {
 			MenuItem menuItem = menu.findItem(R.id.refresh_menu_item);
 			menuItem.setVisible(false);
 		}
@@ -119,6 +126,8 @@ public class ListActivity extends AppCompatActivity implements LoaderManager.Loa
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		Log.d("LOG_TAG", "onCreateOptionsMenu");
+		this.menu = menu;
 		getMenuInflater().inflate(R.menu.list_activity_menu, menu);
 		return true;
 	}
@@ -151,8 +160,13 @@ public class ListActivity extends AppCompatActivity implements LoaderManager.Loa
 	
 	
 	private void attemptNetworkQuery() {
-		if (NetworkUtil.haveConnection(this)) {
-			getLoaderManager().initLoader(0, null, this);
+		if (NetworkUtil.haveConnection(getApplicationContext())) {
+			getLoaderManager().initLoader(LOADER_ID, null, this);
+			if (menu != null) {
+				// This removes the menu item when the user refreshes
+				// and has a network connection
+				menu.removeItem(R.id.refresh_menu_item);
+			}
 		} else {
 			displayNoConnectionError();
 		}

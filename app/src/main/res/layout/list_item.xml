@@ -18,6 +18,12 @@
 		android:id="@+id/constraint_layout"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:layout_marginBottom="@dimen/small_margin"
+		android:layout_marginEnd="@dimen/normal_margin"
+		android:layout_marginLeft="@dimen/normal_margin"
+		android:layout_marginRight="@dimen/normal_margin"
+		android:layout_marginStart="@dimen/normal_margin"
+		android:layout_marginTop="@dimen/small_margin"
 		android:background="?selectableItemBackground"
 		android:onClick="@{() -> eventHandler.onClick(book)}">
 		
@@ -25,12 +31,8 @@
 			android:id="@+id/imageView"
 			android:layout_width="@dimen/thumbnail_size"
 			android:layout_height="@dimen/thumbnail_size"
-			android:layout_marginBottom="8dp"
-			android:layout_marginEnd="16dp"
-			android:layout_marginLeft="16dp"
-			android:layout_marginRight="16dp"
-			android:layout_marginStart="16dp"
-			android:layout_marginTop="8dp"
+			android:layout_marginEnd="@dimen/normal_margin"
+			android:layout_marginRight="@dimen/normal_margin"
 			android:contentDescription="@string/thumbnail_description"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toStartOf="@+id/guideline"
@@ -43,13 +45,14 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:orientation="vertical"
-			app:layout_constraintGuide_begin="72dp" />
+			app:layout_constraintGuide_begin="56dp" />
+		<!--app:layout_constraintGuide_begin is 56dp instead of 72dp because
+			the parent layout has is 16dp of margin on the left/start-->
 		
 		<TextView
 			android:id="@+id/book_title"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="8dp"
 			android:ellipsize="end"
 			android:maxLines="2"
 			android:minLines="2"
@@ -63,7 +66,6 @@
 			android:id="@+id/book_author"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:layout_marginBottom="8dp"
 			android:ellipsize="end"
 			android:maxLines="1"
 			android:text="@{book.author}"
