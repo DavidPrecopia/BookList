@@ -3,4 +3,8 @@
 	android:id="@+id/settings_activity_fragment"
 	android:name="com.example.android.precopia.booklisttest.activates.SettingsActivity$SearchPreferenceFragment"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent" />
+	android:layout_height="match_parent"
+	android:layout_marginEnd="@dimen/normal_margin"
+	android:layout_marginLeft="@dimen/normal_margin"
+	android:layout_marginRight="@dimen/normal_margin"
+	android:layout_marginStart="@dimen/normal_margin" />

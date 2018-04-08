@@ -14,7 +14,8 @@
 	
 	<android.support.constraint.ConstraintLayout
 		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+		android:layout_height="match_parent"
+		android:layout_margin="@dimen/normal_margin">
 		
 		<include
 			android:id="@+id/include"
@@ -26,16 +27,15 @@
 		
 		<ScrollView
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginEnd="16dp"
-			android:layout_marginLeft="16dp"
-			android:layout_marginRight="16dp"
-			android:layout_marginStart="16dp"
-			android:layout_marginTop="8dp"
+			android:layout_height="0dp"
+			android:layout_marginBottom="8dp"
+			android:layout_marginTop="@dimen/normal_margin"
 			android:visibility="@{book.hasDescription() ? View.VISIBLE : View.GONE}"
+			app:layout_constraintBottom_toTopOf="@+id/more_info_button"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/include">
+			app:layout_constraintTop_toBottomOf="@+id/include"
+			app:layout_constraintVertical_bias="0.0">
 			
 			<TextView
 				android:id="@+id/description_text_view"
@@ -50,7 +50,6 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@string/error_no_description"
-			android:textAppearance="?android:textAppearanceMedium"
 			android:visibility="@{book.hasDescription() ? View.GONE : View.VISIBLE}"
 			app:layout_constraintBottom_toTopOf="@+id/more_info_button"
 			app:layout_constraintEnd_toEndOf="parent"
@@ -59,9 +58,7 @@
 		
 		<Button
 			android:id="@+id/more_info_button"
-			android:layout_width="wrap_content"
-			android:layout_height="0dp"
-			android:layout_marginBottom="16dp"
+			style="@style/button"
 			android:text="@string/details_button_more_info"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"

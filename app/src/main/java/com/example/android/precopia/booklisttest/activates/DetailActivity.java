@@ -47,7 +47,6 @@ public class DetailActivity extends AppCompatActivity {
 		}
 	}
 	
-	
 	private void shareBook() {
 		ShareCompat.IntentBuilder
 				.from(this)

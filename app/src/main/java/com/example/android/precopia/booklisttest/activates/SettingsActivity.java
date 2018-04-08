@@ -30,8 +30,7 @@ public class SettingsActivity extends AppCompatActivity {
 		}
 		
 		/**
-		 *  Updates the summary so that it displays the current value stored in SharedPreferences
-		 * @param maxResultsPreference
+		 *  Updates the ListPreferences' summary so it displays the current value stored in SharedPreferences
 		 */
 		private void bindPreferenceSummaryToValue(Preference maxResultsPreference) {
 			maxResultsPreference.setOnPreferenceChangeListener(this);
@@ -40,6 +39,9 @@ public class SettingsActivity extends AppCompatActivity {
 			onPreferenceChange(maxResultsPreference, preferenceString);
 		}
 		
+		/**
+		 * This is the callback for PreferenceChangeListener
+		 */
 		@Override
 		public boolean onPreferenceChange(Preference preference, Object newValue) {
 			preference.setSummary(newValue.toString());
