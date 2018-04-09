@@ -14,7 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -115,7 +114,6 @@ public class ListActivity extends AppCompatActivity implements LoaderManager.Loa
 	 */
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		Log.d("LOG_TAG", "onPrepareOptionsMenu");
 		super.onPrepareOptionsMenu(menu);
 		if (NetworkUtil.haveConnection(getApplicationContext())) {
 			MenuItem menuItem = menu.findItem(R.id.refresh_menu_item);
@@ -126,7 +124,6 @@ public class ListActivity extends AppCompatActivity implements LoaderManager.Loa
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		Log.d("LOG_TAG", "onCreateOptionsMenu");
 		this.menu = menu;
 		getMenuInflater().inflate(R.menu.list_activity_menu, menu);
 		return true;

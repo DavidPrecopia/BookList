@@ -8,19 +8,15 @@ import com.example.android.precopia.booklisttest.book.Book;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AsyncLoader extends AsyncTaskLoader<List<Book>> {
-	
-	private static final String LOG_TAG = AsyncLoader.class.getSimpleName();
+public final class AsyncLoader extends AsyncTaskLoader<List<Book>> {
 	
 	private String url;
 	
 	private List<Book> cacheOfResults;
-	{
-		cacheOfResults = new ArrayList<>();
-	}
 	
 	public AsyncLoader(Context context, String url) {
 		super(context);
+		cacheOfResults = new ArrayList<>();
 		this.url = url;
 	}
 	
@@ -35,7 +31,7 @@ public class AsyncLoader extends AsyncTaskLoader<List<Book>> {
 	
 	@Override
 	public List<Book> loadInBackground() {
-		return NetworkUtil.fetchBookInformation(this.url);
+		return NetworkQuery.fetchBookInformation(url);
 	}
 	
 	@Override

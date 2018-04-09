@@ -1,7 +1,6 @@
 package com.example.android.precopia.booklisttest.network;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.example.android.precopia.booklisttest.book.Book;
 
@@ -14,11 +13,8 @@ import java.util.List;
 
 final class ParseJson {
 	
-	private static final String LOG_TAG = ParseJson.class.getSimpleName();
-	
 	private ParseJson() {
 	}
-	
 	
 	static List<Book> parseJsonResponse(String jsonResponse) {
 		List<Book> bookList = new ArrayList<>();
@@ -32,7 +28,7 @@ final class ParseJson {
 				bookList.add(extractBookInfo(bookInfo));
 			}
 		} catch (JSONException e) {
-			Log.e(LOG_TAG, "Error parsing JSON response", e);
+			e.printStackTrace();
 		}
 		return bookList;
 	}
@@ -47,7 +43,7 @@ final class ParseJson {
 			description = getDescription(bookInfo);
 			bookInfoUrl = getBookInfoUrl(bookInfo);
 		} catch (JSONException e) {
-			Log.e(LOG_TAG, "Error extracting book information", e);
+			e.printStackTrace();
 		}
 		return new Book(title, authors, thumbnailUrl, description, bookInfoUrl);
 	}
@@ -72,7 +68,7 @@ final class ParseJson {
 				authorsString.append(jsonAuthorsArray.get(0).toString());
 			}
 		} catch (JSONException e) {
-			Log.e(LOG_TAG, "Error extracting author(s)", e);
+			e.printStackTrace();
 		}
 		return authorsString.toString();
 	}
