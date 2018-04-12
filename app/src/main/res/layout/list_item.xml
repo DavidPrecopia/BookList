@@ -38,7 +38,7 @@
 			app:layout_constraintEnd_toStartOf="@+id/guideline"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent"
-			app:srcCompat="@{(view) -> book.bindThumbnail(view, book.thumbnailUrl)}" />
+			app:srcCompat="@{book.thumbnailUrl}" />
 		
 		<android.support.constraint.Guideline
 			android:id="@+id/guideline"

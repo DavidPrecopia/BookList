@@ -16,17 +16,17 @@ import java.lang.reflect.Type;
 final class ParseJson implements JsonDeserializer<Book> {
 	
 	private static final String VOLUME_INFO = "volumeInfo";
-
+	
 	private static final String TITLE = "title";
 	private static final String AUTHOR = "authors";
-
+	
 	private static final String IMAGE_LINKS = "imageLinks";
 	private static final String THUMBNAIL_LINK = "thumbnail";
-
+	
 	private static final String DESCRIPTION = "description";
-
+	
 	private static final String INFO_LINK = "infoLink";
-
+	
 	
 	private static final String NO_TITLE = "No title listed";
 	private static final String NO_AUTHOR = "No authors listed";
@@ -60,7 +60,7 @@ final class ParseJson implements JsonDeserializer<Book> {
 	
 	
 	private static String getTitle(JsonObject bookInfo) {
-		return bookInfo.has(TITLE) ? bookInfo.get(TITLE).toString() : NO_TITLE;
+		return bookInfo.has(TITLE) ? removeQuotationMarks(bookInfo.get(TITLE).toString()) : NO_TITLE;
 	}
 	
 	
@@ -78,7 +78,7 @@ final class ParseJson implements JsonDeserializer<Book> {
 	
 	
 	private static String getThumbnailUrl(JsonObject bookInfo) {
-		return bookInfo.has(IMAGE_LINKS) ? bookInfo.getAsJsonObject(IMAGE_LINKS).get(THUMBNAIL_LINK).toString() : "";
+		return bookInfo.has(IMAGE_LINKS) ? removeQuotationMarks(bookInfo.getAsJsonObject(IMAGE_LINKS).get(THUMBNAIL_LINK).toString()) : "";
 	}
 	
 	
@@ -88,6 +88,11 @@ final class ParseJson implements JsonDeserializer<Book> {
 	
 	
 	private static String getBookInfoUrl(JsonObject bookInfo) {
-		return bookInfo.has(INFO_LINK) ? bookInfo.get(INFO_LINK).toString() : "";
+		return bookInfo.has(INFO_LINK) ? removeQuotationMarks(bookInfo.get(INFO_LINK).toString()) : "";
+	}
+	
+	
+	private static String removeQuotationMarks(String text) {
+		return text.substring(1, text.length() - 1);
 	}
 }
