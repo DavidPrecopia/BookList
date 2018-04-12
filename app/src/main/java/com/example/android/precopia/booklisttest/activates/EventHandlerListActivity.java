@@ -3,7 +3,7 @@ package com.example.android.precopia.booklisttest.activates;
 import android.content.Intent;
 
 import com.example.android.precopia.booklisttest.book.Book;
-
+import com.google.gson.Gson;
 
 /**
  * Instead of RecyclerView.Adapter declaring an Interface that is
@@ -22,7 +22,7 @@ public final class EventHandlerListActivity {
 	
 	public void onClick(Book book) {
 		Intent intent = new Intent(listActivity, DetailActivity.class);
-		intent.putExtra(DetailActivity.class.getSimpleName(), book);
+		intent.putExtra(DetailActivity.class.getSimpleName(), new Gson().toJson(book));
 		listActivity.startActivity(intent);
 	}
 }

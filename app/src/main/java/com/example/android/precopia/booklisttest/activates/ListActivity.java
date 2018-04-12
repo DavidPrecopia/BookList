@@ -3,7 +3,6 @@ package com.example.android.precopia.booklisttest.activates;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
-import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -65,25 +64,27 @@ public class ListActivity extends AppCompatActivity implements LoaderManager.Loa
 		progressBar = binding.progressBar;
 		imageViewError = binding.listErrorImageView;
 		textViewError = binding.listErrorTextView;
-
+		
 		attemptNetworkQuery();
 	}
 	
 	
 	private String getUrl() {
 		Intent intent = getIntent();
-		String general = intent.getStringExtra(getString(R.string.general_edit_text));
-		String title = intent.getStringExtra(getString(R.string.title_edit_text));
-		String author = intent.getStringExtra(getString(R.string.author_edit_text));
-		return QueryUrlConcatenation.concatUrl(general, title, author, getMaxResults());
+		return QueryUrlConcatenation.concatUrl(
+				intent.getStringExtra(getString(R.string.general_edit_text)),
+				intent.getStringExtra(getString(R.string.title_edit_text)),
+				intent.getStringExtra(getString(R.string.author_edit_text)),
+				getMaxResults()
+		);
 	}
 	
 	private String getMaxResults() {
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-		return sharedPreferences.getString(
-				getString(R.string.settings_max_results_key),
-				getString(R.string.settings_default_value)
-		);
+		return PreferenceManager.getDefaultSharedPreferences(this)
+				.getString(
+						getString(R.string.settings_max_results_key),
+						getString(R.string.settings_default_value)
+				);
 	}
 	
 	
@@ -109,7 +110,7 @@ public class ListActivity extends AppCompatActivity implements LoaderManager.Loa
 	
 	/**
 	 * Only show the menu item if their is a network connection
-	 *
+	 * <p>
 	 * This is called post onCreateOptionsMenu(Menu menu)
 	 */
 	@Override

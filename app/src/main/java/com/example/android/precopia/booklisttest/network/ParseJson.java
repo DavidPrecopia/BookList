@@ -1,87 +1,93 @@
 package com.example.android.precopia.booklisttest.network;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.example.android.precopia.booklisttest.book.Book;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.lang.reflect.Type;
 
-import java.util.ArrayList;
-import java.util.List;
-
-final class ParseJson {
+final class ParseJson implements JsonDeserializer<Book> {
 	
-	private ParseJson() {
-	}
+	private static final String VOLUME_INFO = "volumeInfo";
+
+	private static final String TITLE = "title";
+	private static final String AUTHOR = "authors";
+
+	private static final String IMAGE_LINKS = "imageLinks";
+	private static final String THUMBNAIL_LINK = "thumbnail";
+
+	private static final String DESCRIPTION = "description";
+
+	private static final String INFO_LINK = "infoLink";
+
 	
-	static List<Book> parseJsonResponse(String jsonResponse) {
-		List<Book> bookList = new ArrayList<>();
+	private static final String NO_TITLE = "No title listed";
+	private static final String NO_AUTHOR = "No authors listed";
+	private static final String LOG_TAG = ParseJson.class.getSimpleName();
+	
+	
+	@Override
+	public Book deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+		Book book = null;
 		try {
-			JSONArray jsonArrayOfBooks = new JSONObject(jsonResponse).optJSONArray("items");
-			if (jsonArrayOfBooks == null) {
-				return bookList;
-			}
-			for (int x = 0; x < jsonArrayOfBooks.length(); x++) {
-				JSONObject bookInfo = jsonArrayOfBooks.getJSONObject(x).getJSONObject("volumeInfo");
-				bookList.add(extractBookInfo(bookInfo));
-			}
-		} catch (JSONException e) {
+			book = extractBookInfo(
+					json.getAsJsonObject().getAsJsonObject(VOLUME_INFO)
+			);
+		} catch (JsonParseException e) {
 			e.printStackTrace();
 		}
-		return bookList;
+		Log.d(LOG_TAG, book.getThumbnailUrl() + " - " + book.getDescription());
+		return book;
 	}
 	
 	
-	private static Book extractBookInfo(JSONObject bookInfo) {
-		String title = "", authors = "", thumbnailUrl = "", description = "", bookInfoUrl = "";
-		try {
-			title = getTitle(bookInfo);
-			authors = getAuthors(bookInfo);
-			thumbnailUrl = getThumbnailUrl(bookInfo);
-			description = getDescription(bookInfo);
-			bookInfoUrl = getBookInfoUrl(bookInfo);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return new Book(title, authors, thumbnailUrl, description, bookInfoUrl);
+	private static Book extractBookInfo(JsonObject bookInfo) {
+		return new Book(
+				getTitle(bookInfo),
+				getAuthors(bookInfo),
+				getThumbnailUrl(bookInfo),
+				getDescription(bookInfo),
+				getBookInfoUrl(bookInfo)
+		);
 	}
 	
-	private static String getTitle(JSONObject bookInfo) throws JSONException {
-		return bookInfo.isNull("title") ? "No title listed" : bookInfo.getString("title");
+	
+	private static String getTitle(JsonObject bookInfo) {
+		return bookInfo.has(TITLE) ? bookInfo.get(TITLE).toString() : NO_TITLE;
 	}
+	
 	
 	@NonNull
-	private static String getAuthors(JSONObject bookInfo) throws JSONException {
-		return bookInfo.isNull("authors") ? "No authors listed" : getAuthors(bookInfo.getJSONArray("authors"));
+	private static String getAuthors(JsonObject bookInfo) {
+		return bookInfo.has(AUTHOR) ? getAuthors(bookInfo.get(AUTHOR).getAsJsonArray()) : NO_AUTHOR;
 	}
 	
-	private static String getAuthors(JSONArray jsonAuthorsArray) {
-		StringBuilder authorsString = new StringBuilder();
-		try {
-			for (int j = 0; j < jsonAuthorsArray.length(); j++) {
-				// Separate authors if multiple
-				if (j > 0) {
-					authorsString.append("; ");
-				}
-				authorsString.append(jsonAuthorsArray.get(0).toString());
-			}
-		} catch (JSONException e) {
-			e.printStackTrace();
+	private static String getAuthors(JsonArray authorsArray) {
+		if (authorsArray.size() == 0) {
+			return NO_AUTHOR;
 		}
-		return authorsString.toString();
+		return authorsArray.get(0).getAsString();
 	}
 	
-	private static String getThumbnailUrl(JSONObject bookInfo) throws JSONException {
-		return bookInfo.isNull("imageLinks") ? "" : bookInfo.optJSONObject("imageLinks").getString("thumbnail");
+	
+	private static String getThumbnailUrl(JsonObject bookInfo) {
+		return bookInfo.has(IMAGE_LINKS) ? bookInfo.getAsJsonObject(IMAGE_LINKS).get(THUMBNAIL_LINK).toString() : "";
 	}
 	
-	private static String getDescription(JSONObject bookInfo) throws JSONException {
-		return bookInfo.isNull("description") ? "" : bookInfo.getString("description");
+	
+	private static String getDescription(JsonObject bookInfo) {
+		return bookInfo.has(DESCRIPTION) ? bookInfo.get(DESCRIPTION).toString() : "";
 	}
 	
-	private static String getBookInfoUrl(JSONObject bookInfo) {
-		return bookInfo.isNull("infoLink") ? "" : bookInfo.optString("infoLink");
+	
+	private static String getBookInfoUrl(JsonObject bookInfo) {
+		return bookInfo.has(INFO_LINK) ? bookInfo.get(INFO_LINK).toString() : "";
 	}
 }

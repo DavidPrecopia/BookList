@@ -13,6 +13,7 @@ import android.view.View;
 import com.example.android.precopia.booklisttest.R;
 import com.example.android.precopia.booklisttest.book.Book;
 import com.example.android.precopia.booklisttest.databinding.ActivityDetailBinding;
+import com.google.gson.Gson;
 
 public class DetailActivity extends AppCompatActivity {
 	
@@ -25,7 +26,10 @@ public class DetailActivity extends AppCompatActivity {
 		
 		binding.moreInfoButton.setOnClickListener(clickListener());
 		
-		book = getIntent().getParcelableExtra(DetailActivity.class.getSimpleName());
+		book = new Gson().fromJson(
+				getIntent().getStringExtra(DetailActivity.class.getSimpleName()),
+				Book.class
+		);
 		binding.setBook(book);
 	}
 	

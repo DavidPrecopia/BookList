@@ -24,7 +24,7 @@
 		android:layout_marginRight="@dimen/normal_margin"
 		android:layout_marginStart="@dimen/normal_margin"
 		android:layout_marginTop="@dimen/small_margin"
-		android:background="?selectableItemBackground"
+		android:background="?android:attr/selectableItemBackground"
 		android:onClick="@{() -> eventHandler.onClick(book)}">
 		
 		<ImageView
@@ -38,7 +38,7 @@
 			app:layout_constraintEnd_toStartOf="@+id/guideline"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent"
-			app:srcCompat="@{book.thumbnailUrl}" />
+			app:srcCompat="@{(view) -> book.bindThumbnail(view, book.thumbnailUrl)}" />
 		
 		<android.support.constraint.Guideline
 			android:id="@+id/guideline"
@@ -65,6 +65,7 @@
 		<TextView
 			android:id="@+id/book_author"
 			android:layout_width="0dp"
+			android:layout_marginTop="4dp"
 			android:layout_height="wrap_content"
 			android:ellipsize="end"
 			android:maxLines="1"
