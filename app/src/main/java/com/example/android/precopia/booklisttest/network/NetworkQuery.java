@@ -3,6 +3,7 @@ package com.example.android.precopia.booklisttest.network;
 import com.example.android.precopia.booklisttest.book.Book;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
@@ -41,6 +42,8 @@ final class NetworkQuery {
 			);
 		} catch (IOException e) {
 			e.printStackTrace();
+		} catch (JsonSyntaxException e) {
+			e.printStackTrace();
 		}
 		return bookList;
 	}
@@ -50,15 +53,14 @@ final class NetworkQuery {
 	}
 	
 	
-	private static List<Book> parseJson(Response response) throws IOException {
+	private static List<Book> parseJson(Response response) throws JsonSyntaxException, IOException {
 		return GSON.fromJson(
-				jsonBooksArray(response.body().string()),
-				new TypeToken<List<Book>>() {
-				}.getType()
+				getBooksArray(response.body().string()),
+				new TypeToken<List<Book>>() {}.getType()
 		);
 	}
 	
-	private static String jsonBooksArray(String jsonString) {
+	private static String getBooksArray(String jsonString) {
 		JSONArray jsonArray = new JSONArray();
 		try {
 			jsonArray = new JSONObject(jsonString).getJSONArray(BOOKS_ARRAY);

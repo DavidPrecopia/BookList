@@ -1,7 +1,6 @@
 package com.example.android.precopia.booklisttest.network;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.example.android.precopia.booklisttest.book.Book;
 import com.google.gson.JsonArray;
@@ -30,7 +29,7 @@ final class ParseJson implements JsonDeserializer<Book> {
 	
 	private static final String NO_TITLE = "No title listed";
 	private static final String NO_AUTHOR = "No authors listed";
-	private static final String LOG_TAG = ParseJson.class.getSimpleName();
+	private static final String MULTIPLE_AUTHORS_SEPARATOR = ", ";
 	
 	
 	@Override
@@ -43,7 +42,6 @@ final class ParseJson implements JsonDeserializer<Book> {
 		} catch (JsonParseException e) {
 			e.printStackTrace();
 		}
-		Log.d(LOG_TAG, book.getThumbnailUrl() + " - " + book.getDescription());
 		return book;
 	}
 	
@@ -60,7 +58,7 @@ final class ParseJson implements JsonDeserializer<Book> {
 	
 	
 	private static String getTitle(JsonObject bookInfo) {
-		return bookInfo.has(TITLE) ? removeQuotationMarks(bookInfo.get(TITLE).toString()) : NO_TITLE;
+		return bookInfo.has(TITLE) ? bookInfo.get(TITLE).getAsString() : NO_TITLE;
 	}
 	
 	
@@ -70,29 +68,39 @@ final class ParseJson implements JsonDeserializer<Book> {
 	}
 	
 	private static String getAuthors(JsonArray authorsArray) {
-		if (authorsArray.size() == 0) {
-			return NO_AUTHOR;
+		switch (authorsArray.size()) {
+			case 0:
+				return NO_AUTHOR;
+			case 1:
+				return authorsArray.get(0).getAsString();
+			default:
+				return multipleAuthors(authorsArray);
 		}
-		return authorsArray.get(0).getAsString();
+	}
+	
+	private static String multipleAuthors(JsonArray authorsArray) {
+		StringBuilder builder = new StringBuilder();
+		for (int x = 0; x < authorsArray.size(); x++) {
+			if (x > 0) {
+				builder.append(MULTIPLE_AUTHORS_SEPARATOR);
+			}
+			builder.append(authorsArray.get(x).getAsString());
+		}
+		return builder.toString();
 	}
 	
 	
 	private static String getThumbnailUrl(JsonObject bookInfo) {
-		return bookInfo.has(IMAGE_LINKS) ? removeQuotationMarks(bookInfo.getAsJsonObject(IMAGE_LINKS).get(THUMBNAIL_LINK).toString()) : "";
+		return bookInfo.has(IMAGE_LINKS) ? bookInfo.getAsJsonObject(IMAGE_LINKS).get(THUMBNAIL_LINK).getAsString() : "";
 	}
 	
 	
 	private static String getDescription(JsonObject bookInfo) {
-		return bookInfo.has(DESCRIPTION) ? bookInfo.get(DESCRIPTION).toString() : "";
+		return bookInfo.has(DESCRIPTION) ? bookInfo.get(DESCRIPTION).getAsString() : "";
 	}
 	
 	
 	private static String getBookInfoUrl(JsonObject bookInfo) {
-		return bookInfo.has(INFO_LINK) ? removeQuotationMarks(bookInfo.get(INFO_LINK).toString()) : "";
-	}
-	
-	
-	private static String removeQuotationMarks(String text) {
-		return text.substring(1, text.length() - 1);
+		return bookInfo.has(INFO_LINK) ? bookInfo.get(INFO_LINK).getAsString() : "";
 	}
 }

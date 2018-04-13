@@ -26,17 +26,13 @@ public final class QueryUrlConcatenation {
 	public static String concatUrl(String generalQuery, String title, String author, String maxResults) {
 		StringBuilder url = new StringBuilder(BASE_URL);
 		
-		url.append(appendGeneral(generalQuery));
+		url.append(generalQuery);
 		url.append(appendTitle(title));
 		url.append(appendAuthor(author));
 		url.append(appendMaxResults(maxResults));
 		
 		Log.d(LOG_TAG, url.toString());
 		return url.toString();
-	}
-	
-	private static String appendGeneral(String generalQuery) {
-		return TextUtils.isEmpty(generalQuery) ? "" : generalQuery;
 	}
 	
 	private static String appendTitle(String title) {

@@ -6,7 +6,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.android.precopia.booklisttest.R;
-import com.example.android.precopia.booklisttest.activates.GlideApp;
 
 public class Book {
 	
