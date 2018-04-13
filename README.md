@@ -1,2 +1,9 @@
 # BookListProject
-For Udacity's Android Basics: Networking course. The Book List project.
+Queries Google Books with user entered terms.
+
+Uses:
+- RecyclerView
+- ConstraintLayout
+- OkHttp
+- GSON
+
