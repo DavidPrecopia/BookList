@@ -1,13 +1,12 @@
 package com.example.android.precopia.booklisttest.activates;
 
-import android.app.LoaderManager;
 import android.content.Intent;
-import android.content.Loader;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.LoaderManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -159,7 +158,7 @@ public class ListActivity extends AppCompatActivity implements LoaderManager.Loa
 	
 	private void attemptNetworkQuery() {
 		if (NetworkUtil.haveConnection(getApplicationContext())) {
-			getLoaderManager().initLoader(LOADER_ID, null, this);
+			getSupportLoaderManager().initLoader(LOADER_ID, null, this);
 			if (menu != null) {
 				// This removes the menu item when the user refreshes
 				// and has a network connection
@@ -171,23 +170,25 @@ public class ListActivity extends AppCompatActivity implements LoaderManager.Loa
 	}
 	
 	
+	@NonNull
 	@Override
-	public Loader<List<Book>> onCreateLoader(int id, Bundle args) {
+	public android.support.v4.content.Loader<List<Book>> onCreateLoader(int id, Bundle args) {
 		return new AsyncLoader(this, queryUrl);
 	}
 	
 	@Override
-	public void onLoadFinished(Loader<List<Book>> loader, List<Book> bookList) {
+	public void onLoadFinished(@NonNull android.support.v4.content.Loader<List<Book>> loader, List<Book> bookList) {
 		progressBar.setVisibility(View.GONE);
 		if (bookList == null || bookList.isEmpty()) {
 			displayNoResultsError();
 		} else {
 			recyclerAdapter.swapData(bookList);
 		}
+		
 	}
 	
 	@Override
-	public void onLoaderReset(Loader<List<Book>> loader) {
+	public void onLoaderReset(@NonNull android.support.v4.content.Loader<List<Book>> loader) {
 		recyclerAdapter.swapData(new ArrayList<Book>());
 	}
 	
