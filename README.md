@@ -6,10 +6,13 @@ Queries Google Books with user entered terms.
 ---
 
 Dependencies
+
 - OkHttp
 - GSON
+- Glide
 
 Icons
+
 - App icon
   - https://material.io/icons/#ic_library_books
 - Settings cog
