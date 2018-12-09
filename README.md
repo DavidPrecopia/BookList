@@ -14,3 +14,7 @@ Queries Google Books with user entered terms.
   - OkHttp
   - GSON
   - Glide
+
+# Copyright
+
+Copyright &copy; 2018 David M Precopia
