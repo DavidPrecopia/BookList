@@ -1,5 +1,8 @@
 # BookList
-Queries Google Books with user entered terms.
+
+This app lets a user search Google Books by a general term, title, or author. It queries Google Books via a REST API using the popular Android and Java library OkHttp, parsing the JSON result with GSON.
+
+It included a preferences screen where the user can specify how many search results they want to be shown.
 
 # Screenshots
 
@@ -11,9 +14,9 @@ Queries Google Books with user entered terms.
   - https://material.io/tools/icons/?style=baseline
 
 - **Libraries**
-  - OkHttp
-  - GSON
-  - Glide
+  - [OkHttp](https://square.github.io/okhttp/)
+  - [GSON](https://github.com/google/gson/blob/master/README.md)
+  - [Glide](https://github.com/bumptech/glide/blob/master/README.md)
 
 # Copyright
 
